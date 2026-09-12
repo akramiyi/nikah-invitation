@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './InvitationSection.module.css';
@@ -8,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const InvitationSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const invitation = useInvitation();
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -139,7 +141,7 @@ const InvitationSection: React.FC = () => {
                 By the grace of Allah, we joyfully invite you to be part of our Nikah and Walima celebrations. Your presence, prayers, and blessings would mean the world to us as we begin this new journey together.
               </p>
               <h3 className={`${styles.innerSignature} anim-inner-text`} style={{ opacity: 0 }}>
-                With love, Imran & Ayesha
+                With love, {invitation.groom_name} & {invitation.bride_name}
               </h3>
             </div>
           </div>

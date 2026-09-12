@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './VenueSection.module.css';
@@ -7,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const VenueSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const invitation = useInvitation();
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -72,7 +74,7 @@ const VenueSection: React.FC = () => {
 
       <div className={styles.venueInner}>
         <p className={`${styles.eyebrow} anim-venue-eyebrow`} style={{ opacity: 0 }}>OUR VENUE</p>
-        <h2 className={`${styles.sectionTitle} anim-venue-title`} style={{ opacity: 0 }}>Noor Banquet & Gardens</h2>
+        <h2 className={`${styles.sectionTitle} anim-venue-title`} style={{ opacity: 0 }}>{invitation.venue_name}</h2>
         
         <div className={`${styles.divider} anim-venue-divider`} style={{ opacity: 0 }}>
           <svg width="160" height="24" viewBox="0 0 160 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="arch-divider">
@@ -85,10 +87,10 @@ const VenueSection: React.FC = () => {
 
         <div className="anim-venue-address" style={{ opacity: 0 }}>
           <p className={styles.addressLine}>
-            14 Rose Avenue, Hazratganj, Lucknow, Uttar Pradesh
+            {invitation.venue_address}
           </p>
           <p className={styles.parkingNote}>
-            Ample parking available on premises.
+            {invitation.venue_parking_note}
           </p>
         </div>
 
@@ -104,7 +106,7 @@ const VenueSection: React.FC = () => {
           </div>
           <div className={styles.locateContent}>
             <p className={styles.locateHelper}>Scan to locate, or</p>
-            <a href="https://maps.google.com/?q=14+Rose+Avenue,+Hazratganj,+Lucknow" target="_blank" rel="noopener noreferrer" className={styles.mapBtn}>
+            <a href={invitation.venue_maps_url} target="_blank" rel="noopener noreferrer" className={styles.mapBtn}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" fill="#D47B95"/>
                 <circle cx="12" cy="9" r="2.5" fill="#F1E9D6"/>

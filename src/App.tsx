@@ -13,10 +13,35 @@ function App() {
       <CustomCursor />
       <Router>
         <Routes>
-          <Route path="/" element={<NikahInvite />} />
+          <Route path="/" element={<div style={{ padding: '2rem', textAlign: 'center', color: '#0B3D2E' }}>Please provide a valid invitation link.</div>} />
+          <Route path="/invite/:slug" element={<NikahInvite />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route 
             path="/admin" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/invitations" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/invitations/new" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/invitations/:id/edit" 
             element={
               <ProtectedRoute>
                 <AdminDashboard />

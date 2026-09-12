@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Footer.module.css';
@@ -8,6 +9,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Footer: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const invitation = useInvitation();
+
+  const dateObj = new Date(invitation.wedding_date);
+  const isValidDate = !isNaN(dateObj.getTime());
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const formattedDate = isValidDate ? `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}` : 'December 12, 2026';
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -49,13 +56,13 @@ const Footer: React.FC = () => {
             <rect x="32" y="10" width="31.1" height="31.1" transform="rotate(45 32 10)" stroke="#C2A878" strokeWidth="1" fill="rgba(0, 0, 0, 0.15)"/>
           </svg>
           <div className={styles.monogramText}>
-            <span>I</span>
-            <span>A</span>
+            <span>{invitation.groom_name.charAt(0)}</span>
+            <span>{invitation.bride_name.charAt(0)}</span>
           </div>
         </div>
 
         {/* Couple Name */}
-        <h2 className={`${styles.coupleName} anim-footer`}>Imran & Ayesha</h2>
+        <h2 className={`${styles.coupleName} anim-footer`}>{invitation.groom_name} & {invitation.bride_name}</h2>
         
         {/* Thank You Message */}
         <p className={`${styles.thankYouMsg} anim-footer`}>
@@ -67,7 +74,7 @@ const Footer: React.FC = () => {
         
         {/* Metadata */}
         <div className={`${styles.metadata} anim-footer`}>
-          #ImranWedsAyesha &middot; December 12, 2026 &middot; Noor Banquet & Gardens
+          {invitation.hashtag} &middot; {formattedDate} &middot; {invitation.venue_name}
         </div>
       </div>
 

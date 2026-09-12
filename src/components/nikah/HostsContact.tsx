@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './HostsContact.module.css';
@@ -7,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HostsContact: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const invitation = useInvitation();
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -56,9 +58,9 @@ const HostsContact: React.FC = () => {
           {/* Left Column: Groom's Family */}
           <div className={`${styles.hostColumn} anim-contact`}>
             <h3 className={styles.familyLabel}>GROOM'S FAMILY</h3>
-            <div className={styles.personName}>Imran Ahmed Sheikh</div>
+            <div className={styles.personName}>{invitation.groom_name}</div>
             <p className={styles.parentInfo}>
-              S/o Mr. Rashid Sheikh & Mrs. Naseem Sheikh
+              {invitation.groom_family}
             </p>
             <a href="tel:+919812345678" className={styles.phoneNumber}>
               +91 98123 45678
@@ -71,9 +73,9 @@ const HostsContact: React.FC = () => {
           {/* Right Column: Bride's Family */}
           <div className={`${styles.hostColumn} anim-contact`}>
             <h3 className={styles.familyLabel}>BRIDE'S FAMILY</h3>
-            <div className={styles.personName}>Ayesha Fatima Khan</div>
+            <div className={styles.personName}>{invitation.bride_name}</div>
             <p className={styles.parentInfo}>
-              D/o Mr. Salman Khan & Mrs. Farida Khan
+              {invitation.bride_family}
             </p>
             <a href="tel:+919876512345" className={styles.phoneNumber}>
               +91 98765 12345

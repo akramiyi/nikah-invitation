@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
+import InvitationsList from './invitations/InvitationsList';
+import InvitationForm from './invitations/InvitationForm';
 
 const AdminDashboard: React.FC = () => {
   const { user, role } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  useEffect(() => {
+    if (location.pathname.includes('/invitations')) {
+      setActiveTab('invitations');
+    } else {
+      setActiveTab('dashboard');
+    }
+  }, [location]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
 
   const navItems = [
-    { id: 'dashboard', label: 'Dashboard' },
-    { id: 'invitations', label: 'Invitations' },
-    { id: 'events', label: 'Events' },
-    { id: 'rsvp', label: 'RSVP Responses' },
-    { id: 'media', label: 'Media' },
-    { id: 'users', label: 'Users' },
-    { id: 'settings', label: 'Settings' },
+    { id: 'dashboard', label: 'Dashboard', path: '/admin' },
+    { id: 'invitations', label: 'Invitations', path: '/admin/invitations' },
+    { id: 'events', label: 'Events', path: '/admin/events' },
+    { id: 'rsvp', label: 'RSVP Responses', path: '/admin/rsvp' },
+    { id: 'media', label: 'Media', path: '/admin/media' },
+    { id: 'users', label: 'Users', path: '/admin/users' },
+    { id: 'settings', label: 'Settings', path: '/admin/settings' },
   ];
 
   return (
@@ -40,7 +53,10 @@ const AdminDashboard: React.FC = () => {
             <div 
               key={item.id}
               className={`${styles.navItem} ${activeTab === item.id ? styles.active : ''}`}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                navigate(item.path);
+              }}
             >
               {item.label}
             </div>
@@ -54,24 +70,32 @@ const AdminDashboard: React.FC = () => {
 
       {/* Main Content Area */}
       <main className={styles.mainContent}>
-        <header className={styles.pageHeader}>
-          <h1 className={styles.pageTitle}>
-            {navItems.find(i => i.id === activeTab)?.label}
-          </h1>
-          <p className={styles.pageSubtitle}>
-            Manage your invitation and guest details
-          </p>
-        </header>
+        {location.pathname === '/admin/invitations' ? (
+          <InvitationsList />
+        ) : location.pathname === '/admin/invitations/new' || location.pathname.includes('/edit') ? (
+          <InvitationForm />
+        ) : (
+          <>
+            <header className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>
+                {navItems.find(i => i.id === activeTab)?.label}
+              </h1>
+              <p className={styles.pageSubtitle}>
+                Manage your invitation and guest details
+              </p>
+            </header>
 
-        <div className={styles.placeholderCard}>
-          <div className={styles.placeholderIcon}>🚧</div>
-          <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', margin: '0 0 8px 0' }}>
-            Module Under Construction
-          </h3>
-          <p className={styles.placeholderText}>
-            The {navItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.
-          </p>
-        </div>
+            <div className={styles.placeholderCard}>
+              <div className={styles.placeholderIcon}>🚧</div>
+              <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', margin: '0 0 8px 0' }}>
+                Module Under Construction
+              </h3>
+              <p className={styles.placeholderText}>
+                The {navItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.
+              </p>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useMemo } from 'react';
+import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import styles from './HeroSection.module.css';
 import heroImg from '../../assets/Gemini_watermartremove.png';
@@ -85,8 +86,11 @@ const MoonIcon = () => (
   </div>
 );
 
+
+
 const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
   const heroRef = useRef<HTMLElement>(null);
+  const invitation = useInvitation();
 
   useEffect(() => {
     if (introComplete && heroRef.current) {
@@ -137,6 +141,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
     }
   }, [introComplete]);
 
+  const dateObj = new Date(invitation.wedding_date);
+  const isValidDate = !isNaN(dateObj.getTime());
+  const day = isValidDate ? dateObj.getDate().toString() : '12';
+  const monthYear = isValidDate ? `${dateObj.toLocaleString('default', { month: 'short' }).toUpperCase()} ${dateObj.getFullYear()}` : 'DEC 2026';
+  const locationCity = invitation.venue_address ? invitation.venue_address.split(',').slice(-2, -1)[0]?.trim() || 'Lucknow' : 'Lucknow';
+
   return (
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.background}></div>
@@ -159,18 +169,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
         <p className={`${styles.togetherText} anim-eyebrow`} style={{ opacity: 0 }}>Together with their families</p>
         
         <h1 className={`${styles.mainTitle} anim-title`} style={{ opacity: 0 }}>
-          Imran <span>&</span> Ayesha
+          {invitation.groom_name} <span>&</span> {invitation.bride_name}
         </h1>
         
         <div className={`${styles.dateLine} anim-details`} style={{ opacity: 0 }}>
           <span className={styles.dateStar}>✦</span>
-          <span className={styles.dateNumber}>12</span>
-          <span className={styles.dateMonth}>DEC 2026</span>
+          <span className={styles.dateNumber}>{day}</span>
+          <span className={styles.dateMonth}>{monthYear}</span>
           <span className={styles.dateStar}>✦</span>
         </div>
         
-        <p className={`${styles.location} anim-details`} style={{ opacity: 0 }}>Lucknow</p>
-        <p className={`${styles.hashtag} anim-details`} style={{ opacity: 0 }}>#ImranWedsAyesha</p>
+        <p className={`${styles.location} anim-details`} style={{ opacity: 0 }}>{locationCity}</p>
+        <p className={`${styles.hashtag} anim-details`} style={{ opacity: 0 }}>{invitation.hashtag}</p>
         
         <div className={styles.buttonGroup}>
           <a href="#rsvp" className={`${styles.btnSolid} anim-btn`} style={{ opacity: 0 }}>RSVP NOW</a>
