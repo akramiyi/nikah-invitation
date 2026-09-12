@@ -85,7 +85,7 @@ const RSVP: React.FC = () => {
     }
 
     try {
-      const { error } = await supabase.from('rsvps').insert({
+      const payload = {
         invitation_id: invitation.id,
         full_name: formData.name,
         mobile_number: formData.mobile,
@@ -93,13 +93,24 @@ const RSVP: React.FC = () => {
         attendance: attendanceValue,
         guest_count: guestCount,
         message: formData.message || null
-      });
+      };
+      
+      console.log('RSVP invitation ID:', invitation.id);
+      console.log('RSVP invitation slug:', invitation.slug);
+      console.log('RSVP payload:', payload);
+      
+      const { data, error } = await supabase.from('rsvps').insert(payload).select().single();
 
       if (error) {
         console.error('RSVP Insert Error:', error);
         setErrorMsg('Failed to submit RSVP. Please try again.');
         setStatus('error');
+      } else if (!data) {
+        console.error('RSVP Insert Failed: No data returned. Possible RLS violation.');
+        setErrorMsg('Failed to submit RSVP due to security policies.');
+        setStatus('error');
       } else {
+        console.log('RSVP Insert Success:', data);
         setStatus('success');
       }
     } catch (err) {
