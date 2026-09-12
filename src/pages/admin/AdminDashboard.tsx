@@ -6,6 +6,9 @@ import styles from './AdminDashboard.module.css';
 import InvitationsList from './invitations/InvitationsList';
 import InvitationForm from './invitations/InvitationForm';
 
+import EventsList from './events/EventsList';
+import EventForm from './events/EventForm';
+
 const AdminDashboard: React.FC = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
@@ -33,6 +36,46 @@ const AdminDashboard: React.FC = () => {
     { id: 'users', label: 'Users', path: '/admin/users' },
     { id: 'settings', label: 'Settings', path: '/admin/settings' },
   ];
+
+  const renderContent = () => {
+    if (location.pathname.includes('/events')) {
+      if (location.pathname.endsWith('/new') || location.pathname.endsWith('/edit')) {
+        return <EventForm />;
+      }
+      return <EventsList />;
+    }
+    
+    if (location.pathname === '/admin/invitations') {
+      return <InvitationsList />;
+    }
+    
+    if (location.pathname === '/admin/invitations/new' || location.pathname.includes('/edit')) {
+      return <InvitationForm />;
+    }
+    
+    return (
+      <>
+        <header className={styles.pageHeader}>
+          <h1 className={styles.pageTitle}>
+            {navItems.find(i => i.id === activeTab)?.label}
+          </h1>
+          <p className={styles.pageSubtitle}>
+            Manage your invitation and guest details
+          </p>
+        </header>
+
+        <div className={styles.placeholderCard}>
+          <div className={styles.placeholderIcon}>🚧</div>
+          <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', margin: '0 0 8px 0' }}>
+            Module Under Construction
+          </h3>
+          <p className={styles.placeholderText}>
+            The {navItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.
+          </p>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div className={styles.dashboard}>
@@ -70,32 +113,7 @@ const AdminDashboard: React.FC = () => {
 
       {/* Main Content Area */}
       <main className={styles.mainContent}>
-        {location.pathname === '/admin/invitations' ? (
-          <InvitationsList />
-        ) : location.pathname === '/admin/invitations/new' || location.pathname.includes('/edit') ? (
-          <InvitationForm />
-        ) : (
-          <>
-            <header className={styles.pageHeader}>
-              <h1 className={styles.pageTitle}>
-                {navItems.find(i => i.id === activeTab)?.label}
-              </h1>
-              <p className={styles.pageSubtitle}>
-                Manage your invitation and guest details
-              </p>
-            </header>
-
-            <div className={styles.placeholderCard}>
-              <div className={styles.placeholderIcon}>🚧</div>
-              <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', margin: '0 0 8px 0' }}>
-                Module Under Construction
-              </h3>
-              <p className={styles.placeholderText}>
-                The {navItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.
-              </p>
-            </div>
-          </>
-        )}
+        {renderContent()}
       </main>
     </div>
   );

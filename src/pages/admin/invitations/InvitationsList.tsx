@@ -121,6 +121,7 @@ const InvitationsList: React.FC = () => {
                   </button>
                 </td>
                 <td style={{ padding: '12px 16px' }}>
+                  <Link to={`/admin/invitations/${inv.id}/events`} style={{ marginRight: '12px', color: '#0B3D2E', textDecoration: 'none', fontWeight: 600 }}>Manage Events</Link>
                   <Link to={`/admin/invitations/${inv.id}/edit`} style={{ marginRight: '12px', color: '#4A8393', textDecoration: 'none' }}>Edit</Link>
                   <button 
                     onClick={() => handleDelete(inv.id, inv.slug)}

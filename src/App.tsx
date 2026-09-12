@@ -48,6 +48,30 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route 
+            path="/admin/invitations/:invitationId/events" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/invitations/:invitationId/events/new" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/invitations/:invitationId/events/:eventId/edit" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </Router>
     </AuthProvider>
