@@ -199,8 +199,19 @@
 }
 
 /* Responsive overrides */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .title {
-    font-size: 38px;
+    font-size: 32px;
+  }
+  .description {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .rsvpSection {
+    padding: 60px 16px;
+  }
+  .contentWrapper {
+    width: 100%;
+    max-width: 100%;
   }
 }

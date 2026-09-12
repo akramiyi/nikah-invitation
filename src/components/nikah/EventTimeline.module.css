@@ -323,36 +323,36 @@
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-  .timelineSectionInner {
-    padding-left: 12px;
-  }
-
   .timelineLine {
-    left: 16px;
-    transform: translateX(0) scaleY(0);
+    left: 30px;
+    transform: translateX(-50%);
   }
 
-  .eventNode {
-    left: 16px;
-    transform: translate(-12px, -50%) rotate(45deg);
+  .timelineProgress {
+    left: -0.5px;
+  }
+
+  .timelineNode {
+    left: 30px;
   }
 
   .cardContainer {
-    width: calc(100% - 48px);
-    margin-left: auto;
-    margin-right: 0;
+    width: 100%;
   }
 
-  .leftCardContainer {
-    margin-right: 0;
+  .leftCardContainer, .rightCardContainer {
+    justify-content: flex-start;
+    padding-left: 70px;
+    padding-right: 0;
+    margin: 0;
   }
 
-  .leftCard {
-    text-align: left;
-    align-items: flex-start;
+  .eventCard {
+    width: 100%;
   }
 
-  .leftCard .badge {
-    flex-direction: row;
+  .sectionTitle {
+    font-size: 32px;
+    height: auto;
   }
 }

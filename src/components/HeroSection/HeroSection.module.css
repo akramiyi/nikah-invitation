@@ -354,3 +354,50 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(6px); }
 }
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 50px;
+    width: 100%;
+    max-width: 90vw;
+    height: auto;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    line-height: 1.2;
+  }
+  .mainTitle span {
+    font-size: 40px;
+    margin: 0 10px;
+  }
+  .dateNumber {
+    font-size: 26px;
+  }
+  .dateMonth {
+    font-size: 11px;
+  }
+  .togetherText {
+    font-size: 18px;
+  }
+  .buttonGroup {
+    flex-direction: column;
+    width: 80%;
+    max-width: 300px;
+    gap: 12px;
+  }
+  .btnSolid, .btnOutline {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainTitle {
+    font-size: 40px;
+  }
+  .mainTitle span {
+    font-size: 30px;
+  }
+  .dateNumber {
+    font-size: 22px;
+  }
+}

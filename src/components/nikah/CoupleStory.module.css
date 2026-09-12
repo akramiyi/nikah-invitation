@@ -74,3 +74,12 @@
   text-transform: uppercase;
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .arabicVerse {
+    font-size: 20px;
+  }
+  .englishTranslation {
+    margin: 0 16px 16px;
+  }
+}

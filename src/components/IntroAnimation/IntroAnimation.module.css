@@ -98,3 +98,10 @@
 .waxSeal:hover {
   transform: scale(1.05);
 }
+
+@media (max-width: 768px) {
+  .waxSeal {
+    width: 140px;
+    height: 140px;
+  }
+}

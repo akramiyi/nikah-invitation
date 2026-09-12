@@ -126,18 +126,25 @@
 
 @media (max-width: 768px) {
   .hostsSection {
-    padding: 80px 20px;
+    padding: 60px 16px;
   }
   .title {
-    font-size: 38px;
+    font-size: 32px;
   }
   .hostsContainer {
     flex-direction: column;
+    align-items: center;
+  }
+  .hostColumn {
+    width: 100%;
+    max-width: 100%;
+    flex: auto;
   }
   .verticalDivider {
     display: none;
   }
   .mobileDivider {
     display: block;
+    margin: 20px 0;
   }
 }

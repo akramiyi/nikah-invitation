@@ -10,3 +10,9 @@
   pointer-events: none; /* CRITICAL: prevents cursor from blocking clicks */
   z-index: 99999; /* Always on top of everything, even the loading screen */
 }
+
+@media (pointer: coarse) {
+  .cursorHalo {
+    display: none !important;
+  }
+}

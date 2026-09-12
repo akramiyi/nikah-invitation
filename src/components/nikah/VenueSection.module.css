@@ -168,3 +168,16 @@
 .mapBtn:hover .mapBtnText {
   color: #F1E9D6;
 }
+
+@media (max-width: 768px) {
+  .locateCard {
+    flex-direction: column;
+    height: auto;
+    max-width: 100%;
+    text-align: center;
+  }
+  .locateContent {
+    align-items: center;
+    text-align: center;
+  }
+}

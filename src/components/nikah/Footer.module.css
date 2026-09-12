@@ -100,10 +100,19 @@
 
 @media (max-width: 768px) {
   .closingContent {
-    padding: 80px 20px;
+    padding: 60px 16px 40px;
   }
   
   .coupleName {
-    font-size: 30px;
+    font-size: 28px;
+  }
+  
+  .metadata {
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  
+  .thankYouMsg {
+    font-size: 13px;
   }
 }

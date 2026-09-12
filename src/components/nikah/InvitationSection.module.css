@@ -186,3 +186,14 @@
 .sealRing::after {
   animation-delay: 1.5s;
 }
+
+@media (max-width: 768px) {
+  .cardClosed {
+    height: auto;
+    min-height: 276.4px;
+    padding-bottom: 24px;
+  }
+  .cardContent {
+    padding: 60px 20px 30px 20px;
+  }
+}

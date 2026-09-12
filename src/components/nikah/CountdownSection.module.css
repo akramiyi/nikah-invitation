@@ -184,7 +184,14 @@
     height: auto;
   }
   
-  .countdownFrame {
+  .countdownFrameWrapper, .countdownFrame {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .countdownInnerFrame {
     padding: 24px 12px;
   }
   
@@ -192,7 +199,34 @@
     font-size: 32px;
   }
   
+  .digit {
+    width: 20px;
+  }
+  
   .separator {
-    margin: 0 14px;
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdownInnerFrame {
+    padding: 20px 8px;
+  }
+  
+  .unitNumber {
+    font-size: 26px;
+  }
+  
+  .digit {
+    width: 16px;
+  }
+  
+  .unitLabel {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+  
+  .separator {
+    margin: 0 6px;
   }
 }
