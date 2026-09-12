@@ -261,8 +261,9 @@ const CountdownSection: React.FC = () => {
               {/* Units */}
             <div className={`${styles.countdownUnit} anim-unit`} style={{ opacity: 0 }}>
               <div className={styles.unitNumber}>
-                <span className={styles.digit}>{String(timeLeft.days).padStart(2, '0')[0]}</span>
-                <span className={styles.digit}>{String(timeLeft.days).padStart(2, '0')[1]}</span>
+                {String(timeLeft.days).padStart(2, '0').split('').map((digit, i) => (
+                  <span key={`day-${i}`} className={styles.digit}>{digit}</span>
+                ))}
               </div>
               <span className={styles.unitLabel}>DAYS</span>
             </div>
@@ -271,8 +272,9 @@ const CountdownSection: React.FC = () => {
 
             <div className={`${styles.countdownUnit} anim-unit`} style={{ opacity: 0 }}>
               <div className={styles.unitNumber}>
-                <span className={styles.digit}>{String(timeLeft.hours).padStart(2, '0')[0]}</span>
-                <span className={styles.digit}>{String(timeLeft.hours).padStart(2, '0')[1]}</span>
+                {String(timeLeft.hours).padStart(2, '0').split('').map((digit, i) => (
+                  <span key={`hour-${i}`} className={styles.digit}>{digit}</span>
+                ))}
               </div>
               <span className={styles.unitLabel}>HOURS</span>
             </div>
@@ -281,8 +283,9 @@ const CountdownSection: React.FC = () => {
 
             <div className={`${styles.countdownUnit} anim-unit`} style={{ opacity: 0 }}>
               <div className={styles.unitNumber}>
-                <span className={styles.digit}>{String(timeLeft.minutes).padStart(2, '0')[0]}</span>
-                <span className={styles.digit}>{String(timeLeft.minutes).padStart(2, '0')[1]}</span>
+                {String(timeLeft.minutes).padStart(2, '0').split('').map((digit, i) => (
+                  <span key={`min-${i}`} className={styles.digit}>{digit}</span>
+                ))}
               </div>
               <span className={styles.unitLabel}>MIN</span>
             </div>
@@ -291,8 +294,9 @@ const CountdownSection: React.FC = () => {
 
             <div className={`${styles.countdownUnit} anim-unit`} style={{ opacity: 0 }}>
               <div className={styles.unitNumber}>
-                <span className={styles.digit}>{String(timeLeft.seconds).padStart(2, '0')[0]}</span>
-                <span className={styles.digit}>{String(timeLeft.seconds).padStart(2, '0')[1]}</span>
+                {String(timeLeft.seconds).padStart(2, '0').split('').map((digit, i) => (
+                  <span key={`sec-${i}`} className={styles.digit}>{digit}</span>
+                ))}
               </div>
               <span className={styles.unitLabel}>SEC</span>
             </div>
