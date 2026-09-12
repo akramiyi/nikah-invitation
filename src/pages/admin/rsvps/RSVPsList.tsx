@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../lib/supabase';
+import { useAuth } from '../../../contexts/AuthContext';
 import styles from './RSVPsList.module.css';
 
 interface RSVP {
@@ -27,9 +28,11 @@ const RSVPsList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { role, user } = useAuth();
+  
   useEffect(() => {
     fetchInvitations();
-  }, []);
+  }, [role, user]);
 
   useEffect(() => {
     if (selectedInvitationId) {
@@ -40,16 +43,36 @@ const RSVPsList: React.FC = () => {
   }, [selectedInvitationId]);
 
   const fetchInvitations = async () => {
+    if (!role) return;
+    
+    setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('invitations')
-        .select('id, groom_name, bride_name')
-        .order('created_at', { ascending: false });
+      if (role === 'super_admin') {
+        const { data, error } = await supabase
+          .from('invitations')
+          .select('id, groom_name, bride_name')
+          .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      setInvitations(data || []);
-      if (data && data.length > 0) {
-        setSelectedInvitationId(data[0].id);
+        if (error) throw error;
+        setInvitations(data || []);
+        if (data && data.length > 0) {
+          setSelectedInvitationId(data[0].id);
+        }
+      } else if (role === 'friend' && user) {
+        const { data, error } = await supabase
+          .from('invitation_members')
+          .select('invitation_id, invitation:invitations(id, groom_name, bride_name)')
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+        
+        // Extract the invitation details
+        const assignedInvs = (data || []).map((m: any) => m.invitation).filter(Boolean);
+        setInvitations(assignedInvs);
+        
+        if (assignedInvs.length > 0) {
+          setSelectedInvitationId(assignedInvs[0].id);
+        }
       }
     } catch (err: any) {
       console.error('Error fetching invitations:', err);

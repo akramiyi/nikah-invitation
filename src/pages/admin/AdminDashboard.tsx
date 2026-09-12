@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
 import InvitationsList from './invitations/InvitationsList';
 import InvitationForm from './invitations/InvitationForm';
+import UsersList from './users/UsersList';
 
 import EventsList from './events/EventsList';
 import EventForm from './events/EventForm';
@@ -40,7 +41,27 @@ const AdminDashboard: React.FC = () => {
     { id: 'settings', label: 'Settings', path: '/admin/settings' },
   ];
 
+  const friendNavItems = [
+    { id: 'dashboard', label: 'My Invitations', path: '/admin' },
+    { id: 'rsvp', label: 'RSVP Responses', path: '/admin/rsvp' },
+  ];
+
+  const currentNavItems = role === 'super_admin' ? navItems : friendNavItems;
+
   const renderContent = () => {
+    if (role === 'friend' && !['/admin', '/admin/rsvp'].includes(location.pathname)) {
+      return (
+        <div style={{ padding: '24px' }}>
+          <h2 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', color: '#0B3D2E' }}>Access Denied</h2>
+          <p>You do not have permission to view this module.</p>
+        </div>
+      );
+    }
+
+    if (location.pathname === '/admin/users' && role === 'super_admin') {
+      return <UsersList />;
+    }
+
     if (location.pathname.includes('/events')) {
       if (location.pathname.endsWith('/new') || location.pathname.endsWith('/edit')) {
         return <EventForm />;
@@ -64,20 +85,22 @@ const AdminDashboard: React.FC = () => {
       <>
         <header className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>
-            {navItems.find(i => i.id === activeTab)?.label}
+            {currentNavItems.find(i => i.id === activeTab)?.label || 'Dashboard'}
           </h1>
           <p className={styles.pageSubtitle}>
-            Manage your invitation and guest details
+            {role === 'super_admin' ? 'Manage your invitation and guest details' : 'Manage your assigned invitations'}
           </p>
         </header>
 
         <div className={styles.placeholderCard}>
-          <div className={styles.placeholderIcon}>🚧</div>
+          <div className={styles.placeholderIcon}>{role === 'super_admin' ? '🚧' : '✨'}</div>
           <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', margin: '0 0 8px 0' }}>
-            Module Under Construction
+            {role === 'super_admin' ? 'Module Under Construction' : 'Welcome to Nikah Admin'}
           </h3>
           <p className={styles.placeholderText}>
-            The {navItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.
+            {role === 'super_admin' 
+              ? `The ${currentNavItems.find(i => i.id === activeTab)?.label} module will be implemented in future steps.` 
+              : 'Select an option from the sidebar to manage your invitations.'}
           </p>
         </div>
       </>
@@ -99,7 +122,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <nav className={styles.nav}>
-          {navItems.map(item => (
+          {currentNavItems.map(item => (
             <div 
               key={item.id}
               className={`${styles.navItem} ${activeTab === item.id ? styles.active : ''}`}

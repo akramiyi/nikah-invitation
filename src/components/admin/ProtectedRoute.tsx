@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     return <Navigate to="/admin/login" replace />;
   }
 
-  if (role !== 'super_admin') {
+  if (role !== 'super_admin' && role !== 'friend') {
     return (
       <div style={{ 
         minHeight: '100vh', 
