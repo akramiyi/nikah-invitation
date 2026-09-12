@@ -57,10 +57,6 @@ const VenueSection: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  const openGoogleMaps = () => {
-    // Exact location for Noor Banquet, Hazratganj, Lucknow
-    window.open('https://maps.google.com/?q=14+Rose+Avenue,+Hazratganj,+Lucknow', '_blank');
-  };
 
   return (
     <section className={styles.venue} id="venue" ref={sectionRef}>
