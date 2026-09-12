@@ -6,6 +6,7 @@ import styles from './AdminDashboard.module.css';
 import InvitationsList from './invitations/InvitationsList';
 import InvitationForm from './invitations/InvitationForm';
 import UsersList from './users/UsersList';
+import MediaList from './media/MediaList';
 
 import EventsList from './events/EventsList';
 import EventForm from './events/EventForm';
@@ -22,6 +23,8 @@ const AdminDashboard: React.FC = () => {
       setActiveTab('invitations');
     } else if (location.pathname.includes('/rsvp')) {
       setActiveTab('rsvp');
+    } else if (location.pathname.includes('/media')) {
+      setActiveTab('media');
     } else {
       setActiveTab('dashboard');
     }
@@ -44,12 +47,13 @@ const AdminDashboard: React.FC = () => {
   const friendNavItems = [
     { id: 'dashboard', label: 'My Invitations', path: '/admin' },
     { id: 'rsvp', label: 'RSVP Responses', path: '/admin/rsvp' },
+    { id: 'media', label: 'Media', path: '/admin/media' },
   ];
 
   const currentNavItems = role === 'super_admin' ? navItems : friendNavItems;
 
   const renderContent = () => {
-    if (role === 'friend' && !['/admin', '/admin/rsvp'].includes(location.pathname)) {
+    if (role === 'friend' && !['/admin', '/admin/rsvp', '/admin/media'].includes(location.pathname)) {
       return (
         <div style={{ padding: '24px' }}>
           <h2 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', color: '#0B3D2E' }}>Access Denied</h2>
@@ -60,6 +64,10 @@ const AdminDashboard: React.FC = () => {
 
     if (location.pathname === '/admin/users' && role === 'super_admin') {
       return <UsersList />;
+    }
+    
+    if (location.pathname === '/admin/media') {
+      return <MediaList />;
     }
 
     if (location.pathname.includes('/events')) {
