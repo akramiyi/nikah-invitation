@@ -7,6 +7,8 @@ export interface InvitationData {
   bride_name: string;
   groom_family: string;
   bride_family: string;
+  groom_contact?: string;
+  bride_contact?: string;
   wedding_date: string;
   nikah_time: string;
   venue_name: string;

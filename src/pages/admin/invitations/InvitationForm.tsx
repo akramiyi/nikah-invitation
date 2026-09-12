@@ -16,6 +16,8 @@ const InvitationForm: React.FC = () => {
     bride_name: '',
     groom_family: '',
     bride_family: '',
+    groom_contact: '',
+    bride_contact: '',
     wedding_date: '',
     nikah_time: '',
     venue_name: '',
@@ -40,6 +42,8 @@ const InvitationForm: React.FC = () => {
               bride_name: data.bride_name || '',
               groom_family: data.groom_family || '',
               bride_family: data.bride_family || '',
+              groom_contact: data.groom_contact || '',
+              bride_contact: data.bride_contact || '',
               wedding_date: data.wedding_date || '',
               nikah_time: data.nikah_time || '',
               venue_name: data.venue_name || '',
@@ -167,6 +171,15 @@ const InvitationForm: React.FC = () => {
           <label style={labelStyle}>
             Bride Family
             <textarea name="bride_family" value={formData.bride_family} onChange={handleChange} style={{...inputStyle, height: '60px'}} />
+          </label>
+
+          <label style={labelStyle}>
+            Groom Contact Number
+            <input type="text" name="groom_contact" value={formData.groom_contact} onChange={handleChange} style={inputStyle} placeholder="e.g. +91 98123 45678" />
+          </label>
+          <label style={labelStyle}>
+            Bride Contact Number
+            <input type="text" name="bride_contact" value={formData.bride_contact} onChange={handleChange} style={inputStyle} placeholder="e.g. +91 98765 12345" />
           </label>
 
           <label style={labelStyle}>

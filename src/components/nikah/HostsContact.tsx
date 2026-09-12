@@ -62,9 +62,11 @@ const HostsContact: React.FC = () => {
             <p className={styles.parentInfo}>
               {invitation.groom_family}
             </p>
-            <a href="tel:+919812345678" className={styles.phoneNumber}>
-              +91 98123 45678
-            </a>
+            {invitation.groom_contact && (
+              <a href={`tel:${invitation.groom_contact.replace(/\D/g, '')}`} className={styles.phoneNumber}>
+                {invitation.groom_contact}
+              </a>
+            )}
           </div>
 
           <div className={`${styles.verticalDivider} anim-contact`}></div>
@@ -77,9 +79,11 @@ const HostsContact: React.FC = () => {
             <p className={styles.parentInfo}>
               {invitation.bride_family}
             </p>
-            <a href="tel:+919876512345" className={styles.phoneNumber}>
-              +91 98765 12345
-            </a>
+            {invitation.bride_contact && (
+              <a href={`tel:${invitation.bride_contact.replace(/\D/g, '')}`} className={styles.phoneNumber}>
+                {invitation.bride_contact}
+              </a>
+            )}
           </div>
 
         </div>
