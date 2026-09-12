@@ -42,11 +42,25 @@ const CountdownSection: React.FC = () => {
     
     // Parse the date (YYYY-MM-DD)
     const [year, month, day] = invitation.wedding_date.split('-').map(Number);
-    // Parse the time (HH:mm or HH:mm:ss)
-    const timeParts = invitation.nikah_time.split(':').map(Number);
-    const hours = timeParts[0] || 0;
-    const minutes = timeParts[1] || 0;
-    const seconds = timeParts[2] || 0;
+    
+    // Parse the time gracefully supporting 12-hour AM/PM and 24-hour
+    const timeString = invitation.nikah_time.trim();
+    const isPM = timeString.toLowerCase().includes('pm');
+    const isAM = timeString.toLowerCase().includes('am');
+    
+    // Remove AM/PM for parsing
+    const cleanTime = timeString.replace(/am|pm/i, '').trim();
+    const timeParts = cleanTime.split(':').map(Number);
+    
+    let hours = timeParts[0] || 0;
+    let minutes = timeParts[1] || 0;
+    let seconds = timeParts[2] || 0;
+
+    if (isPM && hours < 12) {
+      hours += 12;
+    } else if (isAM && hours === 12) {
+      hours = 0;
+    }
 
     // Construct local date without string parsing ambiguities
     return new Date(year, month - 1, day, hours, minutes, seconds);
