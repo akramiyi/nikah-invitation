@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -80,7 +79,7 @@ const Footer: React.FC = () => {
 
       {/* Footer Strip */}
       <div className={`${styles.footerStrip} anim-footer`}>
-        Made with <span className={styles.heart}>&hearts;</span> by <Link to="/admin/login" className={styles.adminLink}>akramiyi</Link>
+        Made with <span className={styles.heart}>&hearts;</span> on SaveOurDate.in
       </div>
     </footer>
   );
