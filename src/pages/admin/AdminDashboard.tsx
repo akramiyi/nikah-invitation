@@ -8,6 +8,7 @@ import InvitationForm from './invitations/InvitationForm';
 
 import EventsList from './events/EventsList';
 import EventForm from './events/EventForm';
+import RSVPsList from './rsvps/RSVPsList';
 
 const AdminDashboard: React.FC = () => {
   const { user, role } = useAuth();
@@ -18,6 +19,8 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     if (location.pathname.includes('/invitations')) {
       setActiveTab('invitations');
+    } else if (location.pathname.includes('/rsvp')) {
+      setActiveTab('rsvp');
     } else {
       setActiveTab('dashboard');
     }
@@ -47,6 +50,10 @@ const AdminDashboard: React.FC = () => {
     
     if (location.pathname === '/admin/invitations') {
       return <InvitationsList />;
+    }
+    
+    if (location.pathname === '/admin/rsvp') {
+      return <RSVPsList />;
     }
     
     if (location.pathname === '/admin/invitations/new' || location.pathname.includes('/edit')) {

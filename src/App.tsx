@@ -72,6 +72,14 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route 
+            path="/admin/rsvp" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </Router>
     </AuthProvider>

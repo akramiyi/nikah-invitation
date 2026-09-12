@@ -2,11 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './RSVP.module.css';
+import { useInvitation } from '../../contexts/InvitationContext';
+import { supabase } from '../../lib/supabase';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const RSVP: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  
+  const invitation = useInvitation();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -17,7 +21,8 @@ const RSVP: React.FC = () => {
     message: ''
   });
   
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,15 +56,57 @@ const RSVP: React.FC = () => {
     setFormData({ ...formData, attending: val });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === 'submitting' || status === 'success') return;
+    
+    setErrorMsg('');
     setStatus('submitting');
     
-    // Simulate submission delay
-    setTimeout(() => {
-      console.log('RSVP Submitted:', formData);
-      setStatus('success');
-    }, 1500);
+    if (!invitation?.id) {
+      setErrorMsg('No invitation context found.');
+      setStatus('error');
+      return;
+    }
+    
+    if (!formData.name || !formData.mobile || !formData.attending) {
+      setErrorMsg('Please fill in all required fields.');
+      setStatus('error');
+      return;
+    }
+
+    const attendanceValue = formData.attending === 'accept' ? 'accepted' : 'declined';
+    const guestCount = parseInt(formData.guests, 10);
+    
+    if (guestCount < 1 || isNaN(guestCount)) {
+      setErrorMsg('Invalid guest count.');
+      setStatus('error');
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('rsvps').insert({
+        invitation_id: invitation.id,
+        full_name: formData.name,
+        mobile_number: formData.mobile,
+        email: formData.email || null,
+        attendance: attendanceValue,
+        guest_count: guestCount,
+        message: formData.message || null
+      });
+
+      if (error) {
+        console.error('RSVP Insert Error:', error);
+        setErrorMsg('Failed to submit RSVP. Please try again.');
+        setStatus('error');
+      } else {
+        setStatus('success');
+      }
+    } catch (err) {
+      console.error('RSVP Exception:', err);
+      setErrorMsg('An unexpected error occurred. Please try again.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -189,13 +236,20 @@ const RSVP: React.FC = () => {
               Thank you! Your response has been received.
             </div>
           ) : (
-            <button 
-              type="submit" 
-              className={styles.submitBtn}
-              disabled={status === 'submitting'}
-            >
-              {status === 'submitting' ? 'SENDING...' : 'SEND RSVP'}
-            </button>
+            <>
+              {status === 'error' && (
+                <div className={`${styles.formMessage} ${styles.error}`} style={{ color: '#e74c3c', marginBottom: '16px', fontSize: '14px', textAlign: 'center' }}>
+                  {errorMsg}
+                </div>
+              )}
+              <button 
+                type="submit" 
+                className={styles.submitBtn}
+                disabled={status === 'submitting'}
+              >
+                {status === 'submitting' ? 'SENDING...' : 'SEND RSVP'}
+              </button>
+            </>
           )}
         </form>
       </div>
