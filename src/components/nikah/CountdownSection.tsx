@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './CountdownSection.module.css';
+import { useInvitation } from '../../contexts/InvitationContext';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const TARGET_DATE = new Date('2026-12-12T16:00:00');
 
 // Deterministic particles
 const PARTICLES = Array.from({ length: 40 }).map((_, i) => {
@@ -29,6 +28,7 @@ const PARTICLES = Array.from({ length: 40 }).map((_, i) => {
 const CountdownSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
+  const invitation = useInvitation();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -37,11 +37,43 @@ const CountdownSection: React.FC = () => {
     seconds: 0,
   });
 
+  const targetDate = useMemo(() => {
+    if (!invitation.wedding_date || !invitation.nikah_time) return new Date();
+    
+    // Parse the date (YYYY-MM-DD)
+    const [year, month, day] = invitation.wedding_date.split('-').map(Number);
+    // Parse the time (HH:mm or HH:mm:ss)
+    const timeParts = invitation.nikah_time.split(':').map(Number);
+    const hours = timeParts[0] || 0;
+    const minutes = timeParts[1] || 0;
+    const seconds = timeParts[2] || 0;
+
+    // Construct local date without string parsing ambiguities
+    return new Date(year, month - 1, day, hours, minutes, seconds);
+  }, [invitation.wedding_date, invitation.nikah_time]);
+
+  const formattedDate = useMemo(() => {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(targetDate);
+  }, [targetDate]);
+
+  const formattedTime = useMemo(() => {
+    return new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    }).format(targetDate);
+  }, [targetDate]);
+
   // Calculate time left
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
-      const difference = TARGET_DATE.getTime() - now.getTime();
+      const difference = targetDate.getTime() - now.getTime();
 
       if (difference > 0) {
         setTimeLeft({
@@ -58,7 +90,7 @@ const CountdownSection: React.FC = () => {
     calculateTimeLeft(); // initial call
     const timer = setInterval(calculateTimeLeft, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   // Animations
   useEffect(() => {
@@ -257,7 +289,7 @@ const CountdownSection: React.FC = () => {
 
         {/* Bottom Content */}
         <p className={`${styles.bottomNote} anim-bottom-note`} style={{ opacity: 0 }}>
-          Until our Nikah on Saturday, December 12, 2026 at 4:00 PM.
+          Until our Nikah on {formattedDate} at {formattedTime}.
         </p>
         <p className={`${styles.arabicText} anim-arabic`} style={{ opacity: 0 }}>
           إن شاء الله
