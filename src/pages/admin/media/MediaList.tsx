@@ -223,8 +223,10 @@ const MediaList: React.FC = () => {
             .remove([storagePath]);
             
           if (storageError) {
-             console.warn('Storage deletion warning (continuing with DB deletion):', storageError);
+             throw new Error(`Failed to delete storage file: ${storageError.message}`);
           }
+          // Some Supabase versions return an empty array if the object was not found, which is fine, 
+          // as long as it didn't explicitly throw a permissions/network error.
         }
       }
 
