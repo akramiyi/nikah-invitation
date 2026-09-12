@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import gsap from 'gsap';
 import styles from './HeroSection.module.css';
+import heroImg from '../../assets/Gemini_watermartremove.png';
 
 interface HeroSectionProps {
   introComplete: boolean;
@@ -142,8 +143,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
 
       {/* BACKGROUND ELEMENTS */}
       <div className={`${styles.overlayContainer} gsap-hero-element`} style={{ opacity: 0 }}>
-        <img src="/src/assets/Gemini_watermartremove.png" alt="Hero Content" className={styles.overlayImg} />
-        <img src="/src/assets/Gemini_watermartremove.png" alt="Hero Content Blurred" className={`${styles.overlayImg} ${styles.blurredCenter}`} />
+        <img src={heroImg} alt="Hero Content" className={styles.overlayImg} />
+        <img src={heroImg} alt="Hero Content Blurred" className={`${styles.overlayImg} ${styles.blurredCenter}`} />
         <div className={styles.vignetteOverlay} />
       </div>
       

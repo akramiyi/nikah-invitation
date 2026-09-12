@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import styles from './IntroAnimation.module.css';
+import introVideo from '../../assets/0911.mp4';
+import waxSealImg from '../../assets/wax-seal.webp';
 
 interface IntroAnimationProps {
   onComplete: () => void;
@@ -101,7 +103,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
       <video 
         ref={videoRef}
         className={styles.introVideo}
-        src="/src/assets/0911.mp4"
+        src={introVideo}
         preload="auto"
         playsInline
         muted
@@ -118,7 +120,7 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
       
       <div className={styles.sealWrapper}>
         <img 
-          src="/src/assets/wax-seal.webp" 
+          src={waxSealImg} 
           alt="Wax Seal" 
           className={styles.waxSeal} 
           ref={sealRef}
