@@ -1,0 +1,170 @@
+.venue {
+  position: relative;
+  width: 100%;
+  background-color: #F1E9D6;
+  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.venueInner {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Corner Decorative Patterns */
+.cornerPattern {
+  position: absolute;
+  bottom: 0;
+  width: 150px;
+  height: 150px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.patternLeft {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.patternRight {
+  right: 0;
+}
+
+.eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  color: #D2B471;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  font-weight: 500;
+}
+
+.sectionTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 41.6px;
+  color: #0B3D2E;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 24px 0;
+}
+
+.addressLine {
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  color: #1A2B23;
+  margin: 0 0 8px 0;
+  width: 100%;
+  line-height: 1.5;
+}
+
+.parkingNote {
+  font-family: 'Jost', sans-serif;
+  font-size: 13.6px;
+  color: #114B38;
+  margin: 0 0 28px 0;
+  width: 100%;
+  line-height: 1.5;
+}
+
+/* Locate Card */
+.locateCard {
+  width: 100%;
+  max-width: 365.38px;
+  height: 145.6px;
+  margin-top: 0px; /* margin was handled by parkingNote bottom margin 28px mostly */
+  padding: 20px 24px;
+  background-color: #F1E9D6;
+  border: 1px solid rgba(210, 180, 113, 0.4);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.qrContainer {
+  flex-shrink: 0;
+  width: 104px;
+  height: 104px;
+  background-color: #e5e5e5; /* Placeholder color */
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qrImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.locateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0px; /* Resetting gap since margin is handled directly by child */
+  text-align: left;
+}
+
+.locateHelper {
+  font-family: 'Jost', sans-serif;
+  font-size: 12.8px;
+  color: #1A2B23;
+  margin: 0 0 8px 0;
+}
+
+.mapBtn {
+  background: transparent;
+  border: 1px solid #D2B471;
+  padding: 12px 28.8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  text-decoration: none;
+  box-sizing: border-box;
+  transform: none !important;
+}
+
+.mapBtn:hover {
+  background: #0B3D2E;
+  border-color: #0B3D2E;
+  transform: none !important;
+}
+
+.mapBtnText {
+  font-family: 'Jost', sans-serif;
+  font-size: 12.48px;
+  color: #0B3D2E;
+  margin: 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.mapBtn:hover .mapBtnText {
+  color: #F1E9D6;
+}

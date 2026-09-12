@@ -1,0 +1,43 @@
+:root {
+  --color-ivory: #FDFBF7;
+  --color-cream: #F4E8D3;
+  --color-champagne: #E5CFA0;
+  --color-gold: #C9A24B;
+  --color-emerald: #0A2E1F;
+  --color-dark-green: #051A11;
+  
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-emerald); /* Final background is dark */
+  color: var(--color-ivory);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  margin-top: 0;
+  font-weight: 500;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

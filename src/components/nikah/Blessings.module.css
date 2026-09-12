@@ -1,0 +1,148 @@
+.blessingsSection {
+  background-color: var(--color-ivory, #FDFBF7);
+  /* Very faint geometric diamond pattern using SVG data URI */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z' fill='none' stroke='%23C2A878' stroke-width='0.5' stroke-opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 80px 80px;
+  background-position: center;
+  padding: 110px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  text-transform: uppercase;
+  color: #A9812F;
+  letter-spacing: 0.28em;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 41.6px;
+  color: #0B3D2E;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 32px 0;
+  width: 200px;
+}
+
+.divider svg {
+  width: 100%;
+}
+
+.description {
+  font-family: 'Jost', sans-serif;
+  font-size: 15.2px;
+  color: #1A2B23;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0 auto 44px auto;
+  font-weight: 400;
+  max-width: 480px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 32px;
+  width: 100%;
+}
+
+.card {
+  background-color: #FAF6EC;
+  border: 1px solid rgba(216, 195, 149, 0.4);
+  border-top: 3px solid #C2A878;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  padding: 40px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 266px;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  border-top-color: #0B3D2E;
+}
+
+.iconWrapper {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-color: #F8F1DF;
+  border: 1px solid rgba(194, 168, 120, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px auto;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+  transform: scale(1.15);
+  border-color: #C2A878;
+}
+
+.cardTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22.4px;
+  color: #0B3D2E;
+  font-weight: 400;
+  margin: 0 0 9.6px 0;
+}
+
+.cardDesc {
+  font-family: 'Jost', sans-serif;
+  font-size: 14.08px;
+  color: #1A2B23;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 218px;
+}
+
+@media (max-width: 768px) {
+  .blessingsSection {
+    padding: 80px 20px;
+  }
+  .title {
+    font-size: 38px;
+  }
+  .cardsContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 360px;
+  }
+}

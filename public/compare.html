@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: black; }
+  .layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+  #vid { opacity: 0.5; }
+  #img { opacity: 0.5; mix-blend-mode: difference; }
+</style>
+</head>
+<body>
+  <video id="vid" class="layer" src="/src/assets/nikah intro animation .mp4" muted></video>
+  <img id="img" class="layer" src="/src/assets/image2.png" />
+  <script>
+    const vid = document.getElementById("vid");
+    vid.currentTime = 999; // jump to end
+  </script>
+</body>
+</html>
+

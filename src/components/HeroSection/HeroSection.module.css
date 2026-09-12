@@ -1,0 +1,356 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(5, 26, 17, 0.4), rgba(5, 26, 17, 0.8));
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frameImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: screen; /* To remove black bg from generated arch */
+  opacity: 0.9;
+}
+
+.overlayContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.overlayImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02); /* Reduced scale to match the newly cut MP4 frame */
+}
+
+/* --- CINEMATIC BLUR EFFECT --- */
+.blurredCenter {
+  filter: blur(3px); /* Reduced blur intensity for a more natural look */
+  /* This masks the blurred layer so it ONLY shows in the center, and fades to transparent before touching the sharp golden arches on the sides! */
+  mask-image: radial-gradient(ellipse at center, black 15%, transparent 60%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 15%, transparent 60%);
+  pointer-events: none;
+}
+
+.vignetteOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Subtle dark vignette in the center so the golden text will pop when added */
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* --- GOLDEN MAGIC PARTICLES --- */
+.snowContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  top: 105vh; /* Start below the screen */
+  animation: floatUp linear infinite;
+}
+
+.snow {
+  background: radial-gradient(circle, #fff7d6 0%, #d4af37 60%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.4);
+}
+
+.star {
+  background: #FFD700; /* Bright gold for the star */
+  /* CSS Polygon for a perfect 5-pointed star */
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.bokeh {
+  background: rgba(255, 215, 0, 0.5); /* Semi-transparent gold */
+  border-radius: 50%;
+  filter: blur(3px); /* Out of focus effect */
+}
+
+.moon {
+  background: transparent;
+  border-radius: 50%;
+  /* Creates a beautiful crescent moon shape using inset shadow */
+  box-shadow: inset -4px -4px 0 0px #FFD700;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.8) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-55vh) translateX(calc(var(--x-offset) / 2)) scale(1.2) rotate(calc(var(--rotation) / 2));
+  }
+  100% {
+    transform: translateY(-110vh) translateX(var(--x-offset)) scale(0.8) rotate(var(--rotation));
+  }
+}
+
+/* --- FOREGROUND TYPOGRAPHY --- */
+.heroContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30; /* Ensure text is above the particles and background */
+  text-align: center;
+}
+
+.diamondRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.diamond {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #E8CF8A;
+  transform: rotate(45deg);
+  opacity: 0.5;
+}
+
+.eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  color: #E8CF8A;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+}
+
+.moonIcon {
+  margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.moonIcon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.togetherText {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: #F7F1DE;
+  font-style: italic;
+  margin: 0 0 20px 0;
+}
+
+.mainTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 73.6px;
+  color: #F7F1DE;
+  margin: 0 0 28px 0;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  width: 455.69px;
+  height: 80.95px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainTitle span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 51.52px;
+  color: #C9A24B;
+  margin: 0 18px;
+  vertical-align: middle;
+}
+
+.dateLine {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 12px 0;
+}
+
+.dateStar {
+  color: #E8CF8A;
+  font-size: 12px;
+}
+
+.dateNumber {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: #E8CF8A;
+  line-height: 1;
+}
+
+.dateMonth {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  color: #F7F1DE;
+  letter-spacing: 0.15em;
+  padding-top: 4px;
+}
+
+.location {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  color: #F7F1DE;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.05em;
+}
+
+.hashtag {
+  font-family: 'Jost', sans-serif;
+  font-size: 12.5px;
+  color: #E8CF8A;
+  margin: 0 0 32px 0;
+  letter-spacing: 0.08em;
+  animation: deepPulseGlow 3.5s infinite ease-in-out;
+}
+
+@keyframes deepPulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(232, 207, 138, 0.4), 
+                 0 0 10px rgba(232, 207, 138, 0.2);
+    color: rgba(232, 207, 138, 0.85); /* Slightly dimmer */
+  }
+  50% {
+    text-shadow: 0 0 8px rgba(232, 207, 138, 1), 
+                 0 0 15px rgba(232, 207, 138, 0.8), 
+                 0 0 25px rgba(232, 207, 138, 0.5),
+                 0 0 35px rgba(232, 207, 138, 0.3);
+    color: #F7F1DE; /* Brightens up when glowing */
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.btnSolid {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  color: #0B3D2E;
+  background: #E8CF8A;
+  padding: 13.6px 30.4px;
+  border-radius: 30px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btnSolid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 207, 138, 0.4);
+  background: #f0deb0;
+}
+
+.btnOutline {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  color: #F7F1DE;
+  border: 1px solid #E8CF8A;
+  padding: 13.6px 30.4px;
+  border-radius: 30px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btnOutline:hover {
+  background: rgba(232, 207, 138, 0.1);
+  transform: translateY(-2px);
+}
+
+.scrollExplore {
+  position: absolute;
+  bottom: 30px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  color: #F7F1DE;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.8;
+}
+
+.chevron {
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}

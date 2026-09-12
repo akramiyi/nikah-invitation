@@ -1,0 +1,109 @@
+.closingSection {
+  background-color: #0B3D2E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.closingContent {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 24px 48px;
+}
+
+.monogram {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 24px auto;
+}
+
+.monogramShape {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.monogramText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: #F7F1DE;
+  line-height: 1.1;
+  z-index: 2;
+}
+
+.coupleName {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30.4px;
+  color: #F7F1DE;
+  font-weight: 400;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.thankYouMsg {
+  font-family: 'Jost', sans-serif;
+  font-size: 14.72px;
+  color: #F1E9D6;
+  margin: 0 0 12px 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.ameen {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  color: #C2A878;
+  font-weight: 400;
+  margin: 0 0 40px 0;
+  text-align: center;
+}
+
+.metadata {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.5px;
+  color: #C2A878;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.footerStrip {
+  width: 100%;
+  background-color: #06241B;
+  padding: 20px 24px;
+  text-align: center;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  color: rgba(253, 251, 247, 0.7);
+  letter-spacing: 0.05em;
+}
+
+.heart {
+  color: #C2A878;
+}
+
+@media (max-width: 768px) {
+  .closingContent {
+    padding: 80px 20px;
+  }
+  
+  .coupleName {
+    font-size: 30px;
+  }
+}

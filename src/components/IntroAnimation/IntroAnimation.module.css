@@ -1,0 +1,100 @@
+.introContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.introVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none; /* User shouldn't click the video */
+}
+
+.raysWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.raysContainer {
+  position: absolute;
+  top: -75vh;
+  left: -75vh;
+  width: 150vh;
+  height: 150vh;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.rayLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, black 15%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle, black 15%, transparent 80%);
+}
+
+.rayLayer1 {
+  background: repeating-conic-gradient(
+    rgba(212, 175, 55, 0.4) 0deg 6deg,
+    transparent 6deg 12deg
+  );
+  animation: rotateRays 30s linear infinite;
+}
+
+.rayLayer2 {
+  background: repeating-conic-gradient(
+    rgba(245, 230, 180, 0.6) 0deg 8deg,
+    transparent 8deg 16deg
+  );
+  animation: rotateRaysReverse 40s linear infinite;
+}
+
+@keyframes rotateRays {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateRaysReverse {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.sealWrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Extracted real wax seal */
+.waxSeal {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.waxSeal:hover {
+  transform: scale(1.05);
+}

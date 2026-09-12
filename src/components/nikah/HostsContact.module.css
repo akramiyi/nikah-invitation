@@ -1,0 +1,143 @@
+.hostsSection {
+  background-color: #F1E9D6;
+  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.52px;
+  text-transform: uppercase;
+  color: #A9812F;
+  letter-spacing: 0.28em;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 41.6px;
+  color: #0B3D2E;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 56px 0;
+  width: 200px;
+}
+
+.divider svg {
+  width: 100%;
+}
+
+.hostsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  max-width: 520px;
+  margin: 32px auto 0;
+  position: relative;
+}
+
+.verticalDivider {
+  width: 1px;
+  height: 153px;
+  background-color: rgba(194, 168, 120, 0.4);
+  align-self: center;
+}
+
+.hostColumn {
+  flex: 0 0 244px;
+  width: 244px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.familyLabel {
+  font-family: 'Jost', sans-serif;
+  font-size: 11.2px;
+  text-transform: uppercase;
+  color: #A9812F;
+  letter-spacing: 0.25em;
+  font-weight: 500;
+  margin: 0 0 9.6px 0;
+}
+
+.personName {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22.4px;
+  color: #0B3D2E;
+  font-weight: 400;
+  margin: 0 0 6.4px 0;
+}
+
+.parentInfo {
+  font-family: 'Jost', sans-serif;
+  font-size: 13.6px;
+  color: #1A2B23;
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.phoneNumber {
+  font-family: 'Jost', sans-serif;
+  font-size: 14.4px;
+  color: #114838;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.phoneNumber:hover {
+  opacity: 0.7;
+}
+
+.mobileDivider {
+  display: none;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(194, 168, 120, 0.4);
+  margin: 40px 0;
+}
+
+@media (max-width: 768px) {
+  .hostsSection {
+    padding: 80px 20px;
+  }
+  .title {
+    font-size: 38px;
+  }
+  .hostsContainer {
+    flex-direction: column;
+  }
+  .verticalDivider {
+    display: none;
+  }
+  .mobileDivider {
+    display: block;
+  }
+}
