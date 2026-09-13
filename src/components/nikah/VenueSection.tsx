@@ -96,13 +96,22 @@ const VenueSection: React.FC = () => {
 
         <div className={`${styles.locateCard} anim-venue-locate`} style={{ opacity: 0 }}>
           <div className={styles.qrContainer}>
-            {/* Using a placeholder SVG for the QR code until an image is provided */}
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4A8393" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
+            {invitation.venue_maps_url ? (
+              <a href={invitation.venue_maps_url} target="_blank" rel="noopener noreferrer">
+                <img 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(invitation.venue_maps_url)}`} 
+                  alt="Scan to view map" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </a>
+            ) : (
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#4A8393" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            )}
           </div>
           <div className={styles.locateContent}>
             <p className={styles.locateHelper}>Scan to locate, or</p>

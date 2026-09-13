@@ -118,7 +118,7 @@ const EventForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} style={{ fontFamily: 'Jost, sans-serif' }}>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
           <label style={labelStyle}>
             Event Number (e.g. 01)
             <input type="text" name="event_number" value={formData.event_number} onChange={handleChange} style={inputStyle} required />

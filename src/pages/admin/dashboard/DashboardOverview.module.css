@@ -182,3 +182,13 @@
   font-style: italic;
   font-size: 16px;
 }
+
+@media (max-width: 768px) {
+  .statCard {
+    padding: 16px;
+  }
+  
+  .statValue {
+    font-size: 26px;
+  }
+}

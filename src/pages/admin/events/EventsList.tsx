@@ -207,53 +207,55 @@ const EventsList: React.FC = () => {
         </div>
       ) : (
         <div style={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontFamily: 'Jost, sans-serif' }}>
-            <thead style={{ backgroundColor: '#f7fafc', borderBottom: '1px solid #e2e8f0' }}>
-              <tr>
-                <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Order</th>
-                <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Title</th>
-                <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Date & Time</th>
-                <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Venue</th>
-                <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.map((event, idx) => (
-                <tr key={event.id} style={{ borderBottom: idx === events.length - 1 ? 'none' : '1px solid #edf2f7' }}>
-                  <td style={{ padding: '16px' }}>
-                    <div style={{ backgroundColor: '#edf2f7', width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '14px' }}>
-                      {event.sort_order}
-                    </div>
-                  </td>
-                  <td style={{ padding: '16px' }}>
-                    <div style={{ fontWeight: 500, color: '#2d3748', marginBottom: '4px' }}>{event.title}</div>
-                    <div style={{ fontSize: '13px', color: '#718096' }}>{event.subtitle}</div>
-                  </td>
-                  <td style={{ padding: '16px' }}>
-                    <div style={{ color: '#2d3748', marginBottom: '4px' }}>{event.date_text}</div>
-                    <div style={{ fontSize: '13px', color: '#718096' }}>{event.time_text}</div>
-                  </td>
-                  <td style={{ padding: '16px', color: '#4a5568' }}>{event.venue}</td>
-                  <td style={{ padding: '16px' }}>
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <Link 
-                        to={`/admin/invitations/${selectedInvitationId}/events/${event.id}/edit`}
-                        style={{ color: '#0B3D2E', textDecoration: 'none', fontWeight: 500 }}
-                      >
-                        Edit
-                      </Link>
-                      <button 
-                        onClick={() => handleDelete(event.id, event.title)}
-                        style={{ background: 'none', border: 'none', color: '#e53e3e', cursor: 'pointer', fontWeight: 500, padding: 0 }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontFamily: 'Jost, sans-serif' }}>
+              <thead style={{ backgroundColor: '#f7fafc', borderBottom: '1px solid #e2e8f0' }}>
+                <tr>
+                  <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Order</th>
+                  <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Title</th>
+                  <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Date & Time</th>
+                  <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Venue</th>
+                  <th style={{ padding: '16px', color: '#4a5568', fontWeight: 600 }}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {events.map((event, idx) => (
+                  <tr key={event.id} style={{ borderBottom: idx === events.length - 1 ? 'none' : '1px solid #edf2f7' }}>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ backgroundColor: '#edf2f7', width: '28px', height: '28px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: '14px' }}>
+                        {event.sort_order}
+                      </div>
+                    </td>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ fontWeight: 500, color: '#2d3748', marginBottom: '4px' }}>{event.title}</div>
+                      <div style={{ fontSize: '13px', color: '#718096' }}>{event.subtitle}</div>
+                    </td>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ color: '#2d3748', marginBottom: '4px' }}>{event.date_text}</div>
+                      <div style={{ fontSize: '13px', color: '#718096' }}>{event.time_text}</div>
+                    </td>
+                    <td style={{ padding: '16px', color: '#4a5568' }}>{event.venue}</td>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ display: 'flex', gap: '12px' }}>
+                        <Link 
+                          to={`/admin/invitations/${selectedInvitationId}/events/${event.id}/edit`}
+                          style={{ color: '#0B3D2E', textDecoration: 'none', fontWeight: 500 }}
+                        >
+                          Edit
+                        </Link>
+                        <button 
+                          onClick={() => handleDelete(event.id, event.title)}
+                          style={{ background: 'none', border: 'none', color: '#e53e3e', cursor: 'pointer', fontWeight: 500, padding: 0 }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

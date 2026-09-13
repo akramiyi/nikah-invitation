@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
 
       {/* Footer Strip */}
       <div className={`${styles.footerStrip} anim-footer`}>
-        Made with <span className={styles.heart}>&hearts;</span> on SaveOurDate.in
+        Made with <span className={styles.heart}>&hearts;</span> on akramiyi
       </div>
     </footer>
   );

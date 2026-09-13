@@ -40,8 +40,16 @@ const CountdownSection: React.FC = () => {
   const targetDate = useMemo(() => {
     if (!invitation.wedding_date || !invitation.nikah_time) return new Date();
     
-    // Parse the date (YYYY-MM-DD)
-    const [year, month, day] = invitation.wedding_date.split('-').map(Number);
+    let baseDate: Date;
+    
+    // 1. Check for strict YYYY-MM-DD format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(invitation.wedding_date.trim())) {
+      const [year, month, day] = invitation.wedding_date.trim().split('-').map(Number);
+      baseDate = new Date(year, month - 1, day);
+    } else {
+      // 2. Fall back to JS Date parsing for free-text formats (e.g. "December 12, 2026")
+      baseDate = new Date(invitation.wedding_date);
+    }
     
     // Parse the time gracefully supporting 12-hour AM/PM and 24-hour
     const timeString = invitation.nikah_time.trim();
@@ -62,8 +70,15 @@ const CountdownSection: React.FC = () => {
       hours = 0;
     }
 
-    // Construct local date without string parsing ambiguities
-    return new Date(year, month - 1, day, hours, minutes, seconds);
+    // 3. Apply the time to the base date
+    baseDate.setHours(hours, minutes, seconds);
+
+    // 4. Fallback if the parsing produced an invalid date
+    if (isNaN(baseDate.getTime())) {
+      return new Date();
+    }
+
+    return baseDate;
   }, [invitation.wedding_date, invitation.nikah_time]);
 
   const formattedDate = useMemo(() => {

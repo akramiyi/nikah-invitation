@@ -251,64 +251,66 @@ const UsersList: React.FC = () => {
         ) : profiles.length === 0 ? (
           <div className={styles.emptyState}>No users found.</div>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Assigned Invitation(s)</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {profiles.map(profile => {
-                const userMemberships = memberships.filter(m => m.user_id === profile.id);
-                
-                return (
-                  <tr key={profile.id}>
-                    <td>{profile.full_name || 'Unknown'} <br/><small style={{color:'#718096'}}>{profile.id}</small></td>
-                    <td>
-                      <span className={`${styles.badge} ${profile.role === 'super_admin' ? styles.badgeAccepted : styles.badgeDeclined}`}>
-                        {profile.role}
-                      </span>
-                    </td>
-                    <td>
-                      {userMemberships.length > 0 ? (
-                        <ul style={{ margin: 0, paddingLeft: '16px' }}>
-                          {userMemberships.map(m => (
-                            <li key={m.id} style={{ marginBottom: '4px' }}>
-                              {m.invitation ? `${m.invitation.groom_name} & ${m.invitation.bride_name} ` : 'Unknown Invitation '}
-                              <span style={{ fontSize: '11px', color: '#718096' }}>(/invite/{m.invitation?.slug})</span>
-                              {' '}
-                              <button 
-                                onClick={() => handleRemoveMembership(m.id)}
-                                style={{ background: 'none', border: 'none', color: '#e53e3e', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}
-                                title="Remove assignment"
-                              >
-                                ✕
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <span style={{ color: '#a0aec0', fontStyle: 'italic' }}>Not assigned</span>
-                      )}
-                    </td>
-                    <td>
-                      {profile.role === 'friend' && (
-                        <button 
-                          onClick={() => handleAssignClick(profile.id)}
-                          style={{ background: '#edf2f7', border: '1px solid #cbd5e0', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', fontSize: '12px' }}
-                        >
-                          Assign Invitation
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div style={{ overflowX: 'auto' }}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Assigned Invitation(s)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {profiles.map(profile => {
+                  const userMemberships = memberships.filter(m => m.user_id === profile.id);
+                  
+                  return (
+                    <tr key={profile.id}>
+                      <td>{profile.full_name || 'Unknown'} <br/><small style={{color:'#718096'}}>{profile.id}</small></td>
+                      <td>
+                        <span className={`${styles.badge} ${profile.role === 'super_admin' ? styles.badgeAccepted : styles.badgeDeclined}`}>
+                          {profile.role}
+                        </span>
+                      </td>
+                      <td>
+                        {userMemberships.length > 0 ? (
+                          <ul style={{ margin: 0, paddingLeft: '16px' }}>
+                            {userMemberships.map(m => (
+                              <li key={m.id} style={{ marginBottom: '4px' }}>
+                                {m.invitation ? `${m.invitation.groom_name} & ${m.invitation.bride_name} ` : 'Unknown Invitation '}
+                                <span style={{ fontSize: '11px', color: '#718096' }}>(/invite/{m.invitation?.slug})</span>
+                                {' '}
+                                <button 
+                                  onClick={() => handleRemoveMembership(m.id)}
+                                  style={{ background: 'none', border: 'none', color: '#e53e3e', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}
+                                  title="Remove assignment"
+                                >
+                                  ✕
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span style={{ color: '#a0aec0', fontStyle: 'italic' }}>Not assigned</span>
+                        )}
+                      </td>
+                      <td>
+                        {profile.role === 'friend' && (
+                          <button 
+                            onClick={() => handleAssignClick(profile.id)}
+                            style={{ background: '#edf2f7', border: '1px solid #cbd5e0', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', fontSize: '12px' }}
+                          >
+                            Assign Invitation
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 

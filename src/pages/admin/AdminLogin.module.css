@@ -133,3 +133,9 @@
 .backLink:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+  .loginBox {
+    padding: 24px;
+  }
+}

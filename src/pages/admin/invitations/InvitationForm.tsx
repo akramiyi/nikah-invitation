@@ -154,7 +154,7 @@ const InvitationForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} style={{ fontFamily: 'Jost, sans-serif' }}>
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
           <label style={labelStyle}>
             Groom Name
             <input type="text" name="groom_name" value={formData.groom_name} onChange={handleChange} style={inputStyle} required />
