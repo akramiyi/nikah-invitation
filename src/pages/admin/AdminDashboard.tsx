@@ -12,6 +12,9 @@ import EventsList from './events/EventsList';
 import EventForm from './events/EventForm';
 import RSVPsList from './rsvps/RSVPsList';
 
+import Settings from './settings/Settings';
+import DashboardOverview from './dashboard/DashboardOverview';
+
 const AdminDashboard: React.FC = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
@@ -46,14 +49,16 @@ const AdminDashboard: React.FC = () => {
 
   const friendNavItems = [
     { id: 'dashboard', label: 'My Invitations', path: '/admin' },
+    { id: 'events', label: 'Events', path: '/admin/events' },
     { id: 'rsvp', label: 'RSVP Responses', path: '/admin/rsvp' },
     { id: 'media', label: 'Media', path: '/admin/media' },
+    { id: 'settings', label: 'Settings', path: '/admin/settings' },
   ];
 
   const currentNavItems = role === 'super_admin' ? navItems : friendNavItems;
 
   const renderContent = () => {
-    if (role === 'friend' && !['/admin', '/admin/rsvp', '/admin/media'].includes(location.pathname)) {
+    if (role === 'friend' && !['/admin', '/admin/events', '/admin/rsvp', '/admin/media', '/admin/settings'].some(p => location.pathname.startsWith(p) || location.pathname === p)) {
       return (
         <div style={{ padding: '24px' }}>
           <h2 style={{ fontFamily: 'Cormorant Garamond', fontSize: '24px', color: '#0B3D2E' }}>Access Denied</h2>
@@ -89,6 +94,14 @@ const AdminDashboard: React.FC = () => {
       return <InvitationForm />;
     }
     
+    if (location.pathname === '/admin/settings') {
+      return <Settings />;
+    }
+
+    if (location.pathname === '/admin') {
+      return <DashboardOverview />;
+    }
+
     return (
       <>
         <header className={styles.pageHeader}>

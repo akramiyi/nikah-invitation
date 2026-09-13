@@ -1,0 +1,163 @@
+.container {
+  padding: 24px;
+  max-width: 800px;
+}
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: #0B3D2E;
+  margin: 0 0 24px 0;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: #0B3D2E;
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #4a5568;
+  font-family: 'Jost', sans-serif;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Jost', sans-serif;
+}
+
+.input:disabled {
+  background-color: #f7fafc;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.helpText {
+  font-size: 12px;
+  color: #718096;
+  margin-top: 4px;
+  font-family: 'Jost', sans-serif;
+}
+
+.primaryBtn {
+  background-color: #0B3D2E;
+  color: #F7F1DE;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  transition: opacity 0.2s;
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+}
+
+.primaryBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  background-color: white;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.secondaryBtn:hover {
+  background-color: #fff5f5;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf2f7;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.badgeSuccess {
+  background-color: #c6f6d5;
+  color: #22543d;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.successAlert {
+  background-color: #c6f6d5;
+  color: #22543d;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  border: 1px solid #9ae6b4;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+}
+
+.errorAlert {
+  background-color: #fed7d7;
+  color: #822727;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  border: 1px solid #feb2b2;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+}
+
+.loadingState {
+  padding: 40px;
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+  font-family: 'Jost', sans-serif;
+}
