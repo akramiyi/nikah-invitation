@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -19,19 +19,18 @@ const AdminDashboard: React.FC = () => {
   const { user, role } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const getActiveTab = () => {
+    const p = location.pathname;
+    if (p.includes('/invitations')) return 'invitations';
+    if (p.includes('/events')) return 'events';
+    if (p.includes('/rsvp')) return 'rsvp';
+    if (p.includes('/media')) return 'media';
+    if (p.includes('/users')) return 'users';
+    if (p.includes('/settings')) return 'settings';
+    return 'dashboard';
+  };
 
-  useEffect(() => {
-    if (location.pathname.includes('/invitations')) {
-      setActiveTab('invitations');
-    } else if (location.pathname.includes('/rsvp')) {
-      setActiveTab('rsvp');
-    } else if (location.pathname.includes('/media')) {
-      setActiveTab('media');
-    } else {
-      setActiveTab('dashboard');
-    }
-  }, [location]);
+  const activeTab = getActiveTab();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -148,7 +147,6 @@ const AdminDashboard: React.FC = () => {
               key={item.id}
               className={`${styles.navItem} ${activeTab === item.id ? styles.active : ''}`}
               onClick={() => {
-                setActiveTab(item.id);
                 navigate(item.path);
               }}
             >
