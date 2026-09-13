@@ -38,6 +38,15 @@ const UsersList: React.FC = () => {
   const [selectedInvitationId, setSelectedInvitationId] = useState<string>('');
   const [assignError, setAssignError] = useState<string | null>(null);
 
+  // Create Friend User Modal State
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [createFullName, setCreateFullName] = useState('');
+  const [createEmail, setCreateEmail] = useState('');
+  const [createSelectedInvitations, setCreateSelectedInvitations] = useState<string[]>([]);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const [createSuccess, setCreateSuccess] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+
   useEffect(() => {
     if (role === 'super_admin') {
       fetchData();
@@ -47,7 +56,6 @@ const UsersList: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Fetch profiles
       const { data: profs, error: profsErr } = await supabase
         .from('profiles')
         .select('*')
@@ -55,8 +63,6 @@ const UsersList: React.FC = () => {
       if (profsErr) throw profsErr;
       setProfiles(profs || []);
 
-      // Fetch memberships with invitation details
-      // Since it's a related table, we can select invitation_id and the invitation details
       const { data: mems, error: memsErr } = await supabase
         .from('invitation_members')
         .select(`
@@ -71,10 +77,8 @@ const UsersList: React.FC = () => {
           )
         `);
       if (memsErr) throw memsErr;
-      // Depending on Supabase setup, invitation might be an array or object. Usually object for many-to-one.
       setMemberships((mems as any) || []);
 
-      // Fetch all invitations for the assignment dropdown
       const { data: invs, error: invsErr } = await supabase
         .from('invitations')
         .select('id, groom_name, bride_name, slug');
@@ -99,7 +103,6 @@ const UsersList: React.FC = () => {
     e.preventDefault();
     if (!selectedUserId || !selectedInvitationId) return;
 
-    // Check if membership already exists locally to prevent unique constraint error smoothly
     const exists = memberships.find(m => m.user_id === selectedUserId && m.invitation_id === selectedInvitationId);
     if (exists) {
       setAssignError('User is already assigned to this invitation.');
@@ -115,7 +118,7 @@ const UsersList: React.FC = () => {
         });
 
       if (error) {
-        if (error.code === '23505') { // Unique violation
+        if (error.code === '23505') {
            setAssignError('User is already assigned to this invitation.');
            return;
         }
@@ -124,7 +127,7 @@ const UsersList: React.FC = () => {
       
       setIsModalOpen(false);
       setSelectedInvitationId('');
-      fetchData(); // Refresh list
+      fetchData(); 
     } catch (err: any) {
       console.error('Error assigning invitation:', err);
       setAssignError(err.message);
@@ -147,6 +150,83 @@ const UsersList: React.FC = () => {
     }
   };
 
+  const handleCreateFriendUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError(null);
+    setCreateSuccess(null);
+    setIsCreating(true);
+
+    if (createSelectedInvitations.length === 0) {
+      setCreateError("Please select at least one invitation.");
+      setIsCreating(false);
+      return;
+    }
+
+    try {
+      // Get the current session to extract the access token
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
+        throw new Error("You must be logged in to perform this action.");
+      }
+
+      // Invoke the Edge Function securely
+      const { data, error } = await supabase.functions.invoke('create-friend-user', {
+        body: {
+          full_name: createFullName,
+          email: createEmail,
+          invitation_ids: createSelectedInvitations
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message || 'An error occurred during invocation.');
+      }
+      
+      // If the function itself returns an error field in the JSON response
+      if (data && data.error) {
+        throw new Error(data.error);
+      }
+
+      setCreateSuccess("Friend user created successfully.");
+      
+      // Reset form
+      setCreateFullName('');
+      setCreateEmail('');
+      setCreateSelectedInvitations([]);
+      
+      // Refresh the list to show the new user
+      fetchData();
+      
+      // Auto close modal after a short delay on success
+      setTimeout(() => {
+        setIsCreateModalOpen(false);
+        setCreateSuccess(null);
+      }, 2000);
+
+    } catch (err: any) {
+      console.error("Error creating friend user:", err);
+      // Supabase Edge Functions often wrap errors in HttpError
+      if (err.context && err.context.json && err.context.json.error) {
+         setCreateError(err.context.json.error);
+      } else {
+         setCreateError(err.message || 'Failed to create friend user. Please try again.');
+      }
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const toggleInvitationSelection = (invId: string) => {
+    setCreateSelectedInvitations(prev => 
+      prev.includes(invId) 
+        ? prev.filter(id => id !== invId)
+        : [...prev, invId]
+    );
+  };
+
   if (role !== 'super_admin') {
     return <div className={styles.emptyState}>Access Denied. Only super admins can view this page.</div>;
   }
@@ -157,7 +237,7 @@ const UsersList: React.FC = () => {
         <h1 className={styles.title}>User Management</h1>
         <button 
           className={styles.exportBtn}
-          onClick={() => alert('SECURITY LIMITATION:\n\nCreating Auth users from the browser requires logging out the current admin or exposing the server-side service_role key.\n\nTo securely add a friend user, please invite them via Supabase Dashboard or implement a secure server-side Edge Function endpoint.')}
+          onClick={() => setIsCreateModalOpen(true)}
         >
           Add Friend User
         </button>
@@ -232,6 +312,7 @@ const UsersList: React.FC = () => {
         )}
       </div>
 
+      {/* Assign Invitation Modal */}
       {isModalOpen && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -279,6 +360,101 @@ const UsersList: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Create Friend User Modal */}
+      {isCreateModalOpen && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{ background: 'white', padding: '24px', borderRadius: '8px', width: '100%', maxWidth: '450px', maxHeight: '90vh', overflowY: 'auto' }}>
+            <h2 style={{ marginTop: 0, fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', color: '#0B3D2E' }}>
+              Create Friend User
+            </h2>
+            <p style={{ fontSize: '14px', color: '#718096', marginBottom: '20px' }}>
+              This will securely invite a new user via email and assign them to the selected invitations.
+            </p>
+            
+            <form onSubmit={handleCreateFriendUser}>
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600 }}>Full Name</label>
+                <input 
+                  type="text"
+                  required
+                  value={createFullName}
+                  onChange={(e) => setCreateFullName(e.target.value)}
+                  style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e0', fontFamily: 'Jost, sans-serif' }}
+                  placeholder="e.g. John Doe"
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600 }}>Email Address</label>
+                <input 
+                  type="email"
+                  required
+                  value={createEmail}
+                  onChange={(e) => setCreateEmail(e.target.value)}
+                  style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #cbd5e0', fontFamily: 'Jost, sans-serif' }}
+                  placeholder="e.g. friend@example.com"
+                />
+              </div>
+
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 600 }}>Assign to Invitations</label>
+                <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '8px' }}>
+                  {invitations.length === 0 ? (
+                    <div style={{ color: '#a0aec0', fontSize: '14px', fontStyle: 'italic' }}>No invitations available.</div>
+                  ) : (
+                    invitations.map(inv => (
+                      <label key={inv.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px', cursor: 'pointer' }}>
+                        <input 
+                          type="checkbox"
+                          checked={createSelectedInvitations.includes(inv.id)}
+                          onChange={() => toggleInvitationSelection(inv.id)}
+                        />
+                        <span style={{ fontSize: '14px', color: '#4a5568' }}>{inv.groom_name} & {inv.bride_name}</span>
+                      </label>
+                    ))
+                  )}
+                </div>
+              </div>
+              
+              {createError && (
+                <div style={{ backgroundColor: '#fed7d7', color: '#822727', padding: '12px', borderRadius: '4px', fontSize: '14px', marginBottom: '16px', border: '1px solid #feb2b2' }}>
+                  {createError}
+                </div>
+              )}
+
+              {createSuccess && (
+                <div style={{ backgroundColor: '#c6f6d5', color: '#22543d', padding: '12px', borderRadius: '4px', fontSize: '14px', marginBottom: '16px', border: '1px solid #9ae6b4' }}>
+                  {createSuccess}
+                </div>
+              )}
+              
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setIsCreateModalOpen(false)}
+                  disabled={isCreating}
+                  style={{ padding: '10px 16px', background: 'transparent', border: '1px solid #cbd5e0', borderRadius: '4px', cursor: 'pointer', fontFamily: 'Jost, sans-serif' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  disabled={isCreating}
+                  style={{ padding: '10px 20px', background: '#0B3D2E', color: '#F7F1DE', border: 'none', borderRadius: '4px', cursor: isCreating ? 'not-allowed' : 'pointer', fontFamily: 'Jost, sans-serif', fontWeight: 500, opacity: isCreating ? 0.7 : 1 }}
+                >
+                  {isCreating ? 'Creating...' : 'Create Friend User'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
