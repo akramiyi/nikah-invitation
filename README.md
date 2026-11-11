@@ -13,7 +13,7 @@
 
 Repository: [github.com/akramiyi](https://github.com/akramiyi)
 
-Live demo: to be added
+Live demo: [nikahiyi.vercel.app](https://nikahiyi.vercel.app) | Sample invitation: [/invite/shahid-mantasha](https://nikahiyi.vercel.app/invite/shahid-mantasha)
 
 </div>
 
@@ -60,9 +60,13 @@ Administrators manage invitations, events, media and guest RSVPs from a protecte
 
 ## Live Demo
 
-Live demo: to be added
+| Resource | Link |
+|---|---|
+| Production site | [https://nikahiyi.vercel.app](https://nikahiyi.vercel.app) |
+| Sample invitation | [https://nikahiyi.vercel.app/invite/shahid-mantasha](https://nikahiyi.vercel.app/invite/shahid-mantasha) |
+| Admin panel | `/admin/login` (requires an account; no demo credentials are provided) |
 
-No public sample invitation URL or demo credentials are provided at this time.
+The sample invitation is a public, guest-facing page. Open it on a mobile device or a narrow browser window to see the intended experience.
 
 ## Screenshots
 
@@ -332,7 +336,7 @@ Public routes: `/` and `/invite/:slug`.
 - No SQL migrations or RLS and Storage policy scripts are included in this repository.
 - The Edge Function's remote deployment cannot be verified from repository files.
 - The public invitation does not yet render a media gallery from the `media` table.
-- No demo credentials or public sample invitation are provided.
+- No demo admin credentials are provided.
 - The venue QR code depends on the external QRServer API.
 - The repository contains a few legacy components that are not used by the current routes.
 
@@ -342,7 +346,7 @@ Planned improvements, not yet implemented:
 
 - Version-controlled Supabase migrations and RLS policies.
 - Public media gallery on the invitation page.
-- Published screenshots and a public demo invitation.
+- Published screenshots.
 
 ## Contributing
 
