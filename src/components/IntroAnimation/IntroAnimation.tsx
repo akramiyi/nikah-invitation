@@ -16,7 +16,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
   const sealRef = useRef<HTMLImageElement>(null);
   const raysRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const hintRef = useRef<HTMLParagraphElement>(null);
   const ctxRef = useRef<gsap.Context | null>(null);
   const [isOpened, setIsOpened] = useState(false);
 
@@ -44,11 +43,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
     
     // Trigger the audio immediately when the seal is clicked
     onSealClick();
-    
-    // Instant hide: Remove tap hint from screen in 0 milliseconds on touch
-    if (hintRef.current) {
-      hintRef.current.style.display = 'none';
-    }
     
     ctxRef.current = gsap.context(() => {
       const tl = gsap.timeline();
@@ -151,9 +145,6 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
           className={styles.waxSeal} 
           ref={sealRef}
         />
-        <p className={styles.tapHint} ref={hintRef}>
-          ✦ TAP SEAL TO OPEN ✦
-        </p>
       </div>
     </div>
   );

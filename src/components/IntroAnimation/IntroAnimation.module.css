@@ -109,48 +109,9 @@
   transform: scale(1.05);
 }
 
-.tapHint {
-  position: absolute;
-  bottom: -45px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-family: 'Jost', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: #051A11;
-  background: rgba(244, 232, 211, 0.95);
-  border: 1px solid #C9A24B;
-  padding: 8px 18px;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  animation: pulseHint 2s infinite ease-in-out;
-  pointer-events: none;
-}
-
-@keyframes pulseHint {
-  0%, 100% {
-    opacity: 0.85;
-    transform: translateX(-50%) scale(0.97);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.03);
-    box-shadow: 0 6px 20px rgba(201, 162, 75, 0.6);
-  }
-}
-
 @media (max-width: 768px) {
   .waxSeal {
     width: 140px;
     height: 140px;
-  }
-  .tapHint {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    padding: 6px 14px;
-    bottom: -40px;
   }
 }
