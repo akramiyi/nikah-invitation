@@ -61,28 +61,61 @@ const NikahInvite: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#051A11',
-        color: '#E8CF8A',
-        fontFamily: 'Cormorant Garamond, serif'
+        padding: '20px',
+        textAlign: 'center',
+        overflow: 'hidden'
       }}>
-        {/* Elegant Royal Crescent / Star Spinner */}
-        <svg width="40" height="40" viewBox="0 0 34 34" fill="#E8CF8A" style={{ animation: 'spinCrescent 3s linear infinite', marginBottom: '20px' }}>
-          <path d="M 21 3.7 A 14.2 14.2 0 1 0 21 30.3 A 14 14 0 0 1 21 3.7 Z" />
-          <path d="M 24 13 L 25 15.8 L 28 15.8 L 25.6 17.6 L 26.5 20.6 L 24 18.8 L 21.5 20.6 L 22.4 17.6 L 20 15.8 L 23 15.8 Z" />
-        </svg>
-        <p style={{
-          fontFamily: 'Jost, sans-serif',
-          fontSize: '13px',
-          letterSpacing: '0.25em',
-          textTransform: 'uppercase',
-          color: '#F4E8D3',
-          opacity: 0.85
+        {/* Glowing Royal Bismillah Calligraphy & Crescent */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          animation: 'deepGlowPulse 2.4s ease-in-out infinite'
         }}>
-          Preparing Invitation...
-        </p>
+          {/* Crescent & Star */}
+          <svg width="44" height="44" viewBox="0 0 34 34" fill="#E8CF8A" style={{ marginBottom: '18px' }}>
+            <path d="M 21 3.7 A 14.2 14.2 0 1 0 21 30.3 A 14 14 0 0 1 21 3.7 Z" />
+            <path d="M 24 13 L 25 15.8 L 28 15.8 L 25.6 17.6 L 26.5 20.6 L 24 18.8 L 21.5 20.6 L 22.4 17.6 L 20 15.8 L 23 15.8 Z" />
+          </svg>
+
+          {/* Bismillah Calligraphy */}
+          <h1 style={{
+            fontFamily: "'Amiri', serif",
+            fontSize: '32px',
+            color: '#E8CF8A',
+            margin: '0 0 12px 0',
+            fontWeight: 700,
+            direction: 'rtl',
+            lineHeight: 1.4
+          }}>
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </h1>
+
+          <p style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: '18px',
+            color: '#F4E8D3',
+            letterSpacing: '0.15em',
+            margin: '0',
+            fontStyle: 'italic',
+            opacity: 0.9
+          }}>
+            Noor-e-Nikah
+          </p>
+        </div>
+
         <style>{`
-          @keyframes spinCrescent {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+          @keyframes deepGlowPulse {
+            0%, 100% {
+              filter: drop-shadow(0 0 6px rgba(232, 207, 138, 0.3)) brightness(0.85);
+              opacity: 0.75;
+              transform: scale(0.98);
+            }
+            50% {
+              filter: drop-shadow(0 0 24px rgba(232, 207, 138, 0.95)) drop-shadow(0 0 45px rgba(201, 162, 75, 0.7)) brightness(1.25);
+              opacity: 1;
+              transform: scale(1.02);
+            }
           }
         `}</style>
       </div>

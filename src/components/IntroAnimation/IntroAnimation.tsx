@@ -45,13 +45,13 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
     // Trigger the audio immediately when the seal is clicked
     onSealClick();
     
+    // Instant hide: Remove tap hint from screen in 0 milliseconds on touch
+    if (hintRef.current) {
+      hintRef.current.style.display = 'none';
+    }
+    
     ctxRef.current = gsap.context(() => {
       const tl = gsap.timeline();
-
-      // Step 0: Fade out the tap hint text immediately on tap
-      if (hintRef.current) {
-        tl.to(hintRef.current, { opacity: 0, duration: 0.2, ease: 'power2.out' }, 0);
-      }
 
       // Step 1: On tap, seal scales UP quickly
       tl.to(sealRef.current, { 
