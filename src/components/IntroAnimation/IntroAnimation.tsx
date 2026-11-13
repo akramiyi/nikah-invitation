@@ -16,12 +16,22 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
   const sealRef = useRef<HTMLImageElement>(null);
   const raysRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hintRef = useRef<HTMLParagraphElement>(null);
   const ctxRef = useRef<gsap.Context | null>(null);
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0); // Prevent browser from restoring scroll position under the fixed intro
     document.body.style.overflow = 'hidden';
+
+    // Smooth entrance: Reveal both envelope poster & seal together seamlessly
+    ctxRef.current = gsap.context(() => {
+      gsap.fromTo(containerRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: 'power2.out' }
+      );
+    });
+
     return () => {
       document.body.style.overflow = 'auto';
       ctxRef.current?.revert();
@@ -38,12 +48,17 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
     ctxRef.current = gsap.context(() => {
       const tl = gsap.timeline();
 
+      // Step 0: Fade out the tap hint text immediately on tap
+      if (hintRef.current) {
+        tl.to(hintRef.current, { opacity: 0, duration: 0.2, ease: 'power2.out' }, 0);
+      }
+
       // Step 1: On tap, seal scales UP quickly
       tl.to(sealRef.current, { 
         scale: 1.15, 
         duration: 0.3, 
         ease: "power2.out" 
-      });
+      }, 0);
 
       // Step 2: Rays expand outwards from the center (chhota se bada)
       tl.fromTo(raysRef.current, 
@@ -129,14 +144,16 @@ const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete, onSealClick
         </div>
       </div>
       
-      <div className={styles.sealWrapper}>
+      <div className={styles.sealWrapper} onClick={handleOpen}>
         <img 
           src={waxSealImg} 
           alt="Wax Seal" 
           className={styles.waxSeal} 
           ref={sealRef}
-          onClick={handleOpen}
         />
+        <p className={styles.tapHint} ref={hintRef}>
+          ✦ TAP SEAL TO OPEN ✦
+        </p>
       </div>
     </div>
   );

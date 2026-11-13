@@ -52,7 +52,41 @@ const NikahInvite: React.FC = () => {
   }, [slug]);
 
   if (loading) {
-    return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#0B3D2E', color: '#E8CF8A', fontFamily: 'Cormorant Garamond' }}>Loading Invitation...</div>;
+    return (
+      <div style={{
+        height: '100dvh',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#051A11',
+        color: '#E8CF8A',
+        fontFamily: 'Cormorant Garamond, serif'
+      }}>
+        {/* Elegant Royal Crescent / Star Spinner */}
+        <svg width="40" height="40" viewBox="0 0 34 34" fill="#E8CF8A" style={{ animation: 'spinCrescent 3s linear infinite', marginBottom: '20px' }}>
+          <path d="M 21 3.7 A 14.2 14.2 0 1 0 21 30.3 A 14 14 0 0 1 21 3.7 Z" />
+          <path d="M 24 13 L 25 15.8 L 28 15.8 L 25.6 17.6 L 26.5 20.6 L 24 18.8 L 21.5 20.6 L 22.4 17.6 L 20 15.8 L 23 15.8 Z" />
+        </svg>
+        <p style={{
+          fontFamily: 'Jost, sans-serif',
+          fontSize: '13px',
+          letterSpacing: '0.25em',
+          textTransform: 'uppercase',
+          color: '#F4E8D3',
+          opacity: 0.85
+        }}>
+          Preparing Invitation...
+        </p>
+        <style>{`
+          @keyframes spinCrescent {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
   }
 
   if (error || !invitation) {
