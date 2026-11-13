@@ -95,16 +95,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
   const invitation = useInvitation();
 
   useEffect(() => {
-    if (introComplete && heroRef.current) {
+    if (!introComplete || !heroRef.current) return;
+
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const ctx = gsap.context(() => {
       const q = gsap.utils.selector(heroRef);
       const animTargets = q('.gsap-hero-element, .anim-decor, .anim-eyebrow, .anim-title, .anim-details, .anim-btn, .anim-scroll');
       
       // will-change hygiene: apply transform/opacity before animation starts
       gsap.set(animTargets, { willChange: 'transform, opacity' });
 
+      // Safety timeout: reset will-change after 4 seconds even if onComplete doesn't fire
+      timeoutId = setTimeout(() => {
+        gsap.set(animTargets, { willChange: 'auto' });
+      }, 4000);
+
       // Create a master entrance timeline for high impact
       const tl = gsap.timeline({
         onComplete: () => {
+          clearTimeout(timeoutId);
           // Release GPU layers once animation finishes
           gsap.set(animTargets, { willChange: 'auto' });
         }
@@ -151,7 +161,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
         { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' },
         "-=0.5"
       );
-    }
+    }, heroRef);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (heroRef.current) {
+        const q = gsap.utils.selector(heroRef);
+        gsap.set(q('.gsap-hero-element, .anim-decor, .anim-eyebrow, .anim-title, .anim-details, .anim-btn, .anim-scroll'), { willChange: 'auto' });
+      }
+      ctx.revert();
+    };
   }, [introComplete]);
 
   const dateObj = new Date(invitation.wedding_date);
