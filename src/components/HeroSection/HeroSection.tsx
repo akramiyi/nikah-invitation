@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import styles from './HeroSection.module.css';
-import heroImg from '../../assets/Gemini_watermartremove.png';
+import heroImg from '../../assets/optimized/hero-bg.webp';
 
 interface HeroSectionProps {
   introComplete: boolean;
@@ -10,7 +10,9 @@ interface HeroSectionProps {
 
 const GoldenSnow = () => {
   const particles = useMemo(() => {
-    return [...Array(65)].map((_, i) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobile ? 25 : 65;
+    return [...Array(count)].map((_, i) => {
       const rand = Math.random();
       let type: 'snow' | 'star' | 'bokeh' | 'moon' = 'snow';
       if (rand > 0.90) type = 'moon'; // 10% moons
@@ -95,7 +97,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ introComplete }) => {
   useEffect(() => {
     if (introComplete && heroRef.current) {
       const q = gsap.utils.selector(heroRef);
-      const tl = gsap.timeline();
+      const animTargets = q('.gsap-hero-element, .anim-decor, .anim-eyebrow, .anim-title, .anim-details, .anim-btn, .anim-scroll');
+      
+      // will-change hygiene: apply transform/opacity before animation starts
+      gsap.set(animTargets, { willChange: 'transform, opacity' });
+
+      // Create a master entrance timeline for high impact
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Release GPU layers once animation finishes
+          gsap.set(animTargets, { willChange: 'auto' });
+        }
+      });
 
       // 1. Fade in Background & Particles
       tl.to(q('.gsap-hero-element'), { 
