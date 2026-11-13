@@ -83,7 +83,7 @@ const NikahInvite: React.FC = () => {
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        {/* Glowing Royal Bismillah Calligraphy & Spinning Crescent */}
+        {/* Spinning Crescent & Dynamic Couple Names */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -92,51 +92,37 @@ const NikahInvite: React.FC = () => {
           {/* Spinning Crescent & Star */}
           <div style={{
             animation: 'spinCrescent 4s linear infinite',
-            marginBottom: '22px'
+            marginBottom: '26px'
           }}>
-            <svg width="48" height="48" viewBox="0 0 34 34" fill="#E8CF8A" style={{ filter: 'drop-shadow(0 0 10px rgba(232, 207, 138, 0.7))' }}>
+            <svg width="52" height="52" viewBox="0 0 34 34" fill="#E8CF8A" style={{ filter: 'drop-shadow(0 0 12px rgba(232, 207, 138, 0.8))' }}>
               <path d="M 21 3.7 A 14.2 14.2 0 1 0 21 30.3 A 14 14 0 0 1 21 3.7 Z" />
               <path d="M 24 13 L 25 15.8 L 28 15.8 L 25.6 17.6 L 26.5 20.6 L 24 18.8 L 21.5 20.6 L 22.4 17.6 L 20 15.8 L 23 15.8 Z" />
             </svg>
           </div>
 
-          {/* Bismillah Calligraphy with Deep Golden Glow (Brightness badegi aur ghotegi) */}
+          {/* Prominent Dynamic Couple Names (Bada aur saaf) */}
           <h1 style={{
-            fontFamily: "'Amiri', serif",
-            fontSize: '34px',
-            color: '#F4E8D3',
-            margin: '0 0 14px 0',
-            fontWeight: 700,
-            direction: 'rtl',
-            lineHeight: 1.4,
-            animation: 'noorBismillahGlow 2.5s ease-in-out infinite'
-          }}>
-            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-          </h1>
-
-          {/* Dynamic Couple Name derived from slug */}
-          <p style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '22px',
-            color: '#E8CF8A',
-            letterSpacing: '0.12em',
-            margin: '0 0 6px 0',
+            fontSize: '44px',
+            color: '#F4E8D3',
+            letterSpacing: '0.04em',
+            margin: '0 0 10px 0',
             fontWeight: 500,
-            textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
-            animation: 'noorTextGlow 2.5s ease-in-out infinite'
+            textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)',
+            animation: 'noorNameGlow 2.5s ease-in-out infinite'
           }}>
             {slugCoupleName}
-          </p>
+          </h1>
 
           <span style={{
             fontFamily: "'Jost', sans-serif",
-            fontSize: '11px',
-            letterSpacing: '0.28em',
+            fontSize: '12px',
+            letterSpacing: '0.3em',
             textTransform: 'uppercase',
-            color: '#C9A24B',
-            opacity: 0.8
+            color: '#E8CF8A',
+            opacity: 0.85
           }}>
-            Wedding Invitation
+            NIKAH INVITATION
           </span>
         </div>
 
@@ -145,24 +131,16 @@ const NikahInvite: React.FC = () => {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
-          @keyframes noorBismillahGlow {
+          @keyframes noorNameGlow {
             0%, 100% {
-              filter: drop-shadow(0 0 4px rgba(232, 207, 138, 0.4)) brightness(0.85);
-              opacity: 0.75;
+              filter: drop-shadow(0 0 6px rgba(232, 207, 138, 0.35)) brightness(0.9);
+              opacity: 0.85;
+              transform: scale(0.99);
             }
             50% {
-              filter: drop-shadow(0 0 20px rgba(232, 207, 138, 1)) drop-shadow(0 0 35px rgba(201, 162, 75, 0.8)) brightness(1.35);
+              filter: drop-shadow(0 0 24px rgba(232, 207, 138, 0.9)) drop-shadow(0 0 45px rgba(201, 162, 75, 0.6)) brightness(1.25);
               opacity: 1;
-            }
-          }
-          @keyframes noorTextGlow {
-            0%, 100% {
-              opacity: 0.7;
-              filter: brightness(0.9);
-            }
-            50% {
-              opacity: 1;
-              filter: drop-shadow(0 0 12px rgba(232, 207, 138, 0.8)) brightness(1.2);
+              transform: scale(1.02);
             }
           }
         `}</style>
