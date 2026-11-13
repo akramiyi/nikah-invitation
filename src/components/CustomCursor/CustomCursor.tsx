@@ -37,6 +37,9 @@ const CustomCursor: React.FC = () => {
     return () => {
       touchQuery.removeEventListener('change', handleMediaChange);
       window.removeEventListener('mousemove', onMouseMove);
+      if (cursorRef.current) {
+        gsap.killTweensOf(cursorRef.current);
+      }
     };
   }, [isTouch]);
 
