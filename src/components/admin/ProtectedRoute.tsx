@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../lib/supabase';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, role, loading } = useAuth();
@@ -42,7 +43,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
         <button 
           onClick={() => {
             // Provide a way out for users stuck in wrong role
-            import('../../lib/supabase').then(({ supabase }) => supabase.auth.signOut());
+            supabase.auth.signOut();
           }}
           style={{
             marginTop: '24px',

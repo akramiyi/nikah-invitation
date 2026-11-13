@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './AudioPlayer.module.css';
-import naatAudio from '../../assets/naat.mp3';
+import naatAudio from '../../assets/optimized/naat-optimized.mp3';
 
 interface AudioPlayerProps {
   playTrigger: boolean;
@@ -34,7 +34,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ playTrigger }) => {
 
   return (
     <div className={`${styles.audioButton} ${isPlaying ? styles.playing : ''}`} onClick={togglePlay} title="Toggle Audio">
-      <audio ref={audioRef} src={naatAudio} loop />
+      <audio ref={audioRef} src={naatAudio} preload="none" loop />
       
       {/* Equalizer bars for the icon */}
       <div className={styles.barsContainer}>
