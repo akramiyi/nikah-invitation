@@ -45,15 +45,34 @@ const NikahInvite: React.FC = () => {
   useEffect(() => {
     const fetchInvitation = async () => {
       try {
+        const cacheKey = `nikah_invitation_${slug}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        
+        // 1. Instant Cache Load (Zero Network Delay)
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            setInvitation(parsed);
+            setLoading(false);
+          } catch (e) {
+            console.error('Failed to parse cached invitation', e);
+          }
+        }
+
+        // 2. Fetch specific columns only (no raw wildcard '*')
         const { data, error } = await supabase
           .from('invitations')
-          .select('*')
+          .select('id, slug, groom_name, bride_name, groom_family, bride_family, groom_contact, bride_contact, wedding_date, nikah_time, venue_name, venue_address, venue_parking_note, venue_maps_url, hashtag, is_published')
           .eq('slug', slug)
           .eq('is_published', true)
           .single();
         
-        if (error) throw error;
-        setInvitation(data as InvitationData);
+        if (error) {
+          if (!cached) throw error;
+        } else if (data) {
+          setInvitation(data as InvitationData);
+          sessionStorage.setItem(cacheKey, JSON.stringify(data));
+        }
       } catch (err) {
         setError('Invitation not found or unavailable');
       } finally {

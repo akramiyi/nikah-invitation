@@ -13,7 +13,7 @@ const InvitationsList: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('invitations')
-        .select('*')
+        .select('id, slug, groom_name, bride_name, wedding_date, is_published, created_at')
         .order('created_at', { ascending: false });
 
       if (error) throw error;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useInvitation } from '../../contexts/InvitationContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { QRCodeSVG } from 'qrcode.react';
 import styles from './VenueSection.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -97,11 +98,13 @@ const VenueSection: React.FC = () => {
         <div className={`${styles.locateCard} anim-venue-locate`} style={{ opacity: 0 }}>
           <div className={styles.qrContainer}>
             {invitation.venue_maps_url ? (
-              <a href={invitation.venue_maps_url} target="_blank" rel="noopener noreferrer">
-                <img 
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(invitation.venue_maps_url)}`} 
-                  alt="Scan to view map" 
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              <a href={invitation.venue_maps_url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                <QRCodeSVG 
+                  value={invitation.venue_maps_url} 
+                  size={96}
+                  bgColor="transparent"
+                  fgColor="#051A11"
+                  level="M"
                 />
               </a>
             ) : (

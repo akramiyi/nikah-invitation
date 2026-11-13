@@ -27,14 +27,28 @@ const EventTimeline: React.FC = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        const cacheKey = `nikah_events_${invitation.id}`;
+        const cached = sessionStorage.getItem(cacheKey);
+
+        if (cached) {
+          try {
+            setEvents(JSON.parse(cached));
+            setLoading(false);
+          } catch (e) {
+            console.error('Failed to parse cached events', e);
+          }
+        }
+
+        // Fetch specific event columns only
         const { data, error } = await supabase
           .from('events')
-          .select('*')
+          .select('id, event_number, title, urdu_title, subtitle, date_text, time_text, venue, sort_order')
           .eq('invitation_id', invitation.id)
           .order('sort_order', { ascending: true });
         
         if (!error && data) {
           setEvents(data);
+          sessionStorage.setItem(cacheKey, JSON.stringify(data));
         }
       } catch (err) {
         console.error('Failed to fetch events', err);
