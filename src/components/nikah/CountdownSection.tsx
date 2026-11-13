@@ -7,7 +7,7 @@ import { useInvitation } from '../../contexts/InvitationContext';
 gsap.registerPlugin(ScrollTrigger);
 
 // Deterministic particles
-const PARTICLES = Array.from({ length: 40 }).map((_, i) => {
+const ALL_PARTICLES = Array.from({ length: 40 }).map((_, i) => {
   const seed = i * 137.5; 
   const random = (min: number, max: number, s: number) => min + ((Math.sin(s) + 1) / 2) * (max - min);
   
@@ -29,6 +29,11 @@ const CountdownSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
   const invitation = useInvitation();
+
+  const particles = useMemo(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    return isMobile ? ALL_PARTICLES.slice(0, 15) : ALL_PARTICLES;
+  }, []);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -132,7 +137,8 @@ const CountdownSection: React.FC = () => {
       if (particlesRef.current) {
         const particleElements = particlesRef.current.children;
         Array.from(particleElements).forEach((el, index) => {
-          const p = PARTICLES[index];
+          const p = particles[index];
+          if (!p) return;
           gsap.to(el, {
             x: p.xDrift,
             y: p.yDrift,
@@ -225,7 +231,7 @@ const CountdownSection: React.FC = () => {
       
       {/* Background Particles */}
       <div className={styles.particlesContainer} ref={particlesRef}>
-        {PARTICLES.map((p) => (
+        {particles.map((p) => (
           <div 
             key={p.id} 
             className={styles.particle} 
